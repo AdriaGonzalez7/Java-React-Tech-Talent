@@ -2,10 +2,11 @@
 public class Test2{
 	public static void main(String args[]){
 
+		Integer num1 = new Integer("125"); // sintaxis obsoleta
+		Integer num2 = new Integer(20);
 		
-		Integer num1 = Integer.valueOf("125");
-		Integer num2 = Integer.valueOf(20);
-		num2=(20);
+//		Integer num1 = Integer.valueOf(125); opcion correcta
+//		Integer num2 = Integer.valueOf(20);
 		
 		int n1=num1.intValue();
 		int n2=num2.intValue();
