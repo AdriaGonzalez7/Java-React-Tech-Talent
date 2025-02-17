@@ -4,13 +4,12 @@ public class Tarea4Ejercicio2 {
 	public static void main(String[] args) {
 		int N = 1;
 		double A = 2;
-		char C = 'A';
+		char C = 'a';
 		
-		System.out.printf("Variable N= "+ N +"%nVariable A= "+ A + "%nVariable C= " + C +"%n" );
+		System.out.println("Variable N= "+ N +"\nVariable A= "+ A + "\nVariable C= " + C );
 		System.out.println( N + " + " + A + " = " + (N + A));
-		System.out.printf( N + " - " + A + " = " + (A - N));
-
-//		System.out.println("La suma es:"+ (num1 + num2));
+		System.out.println( N + " - " + A + " = " + (A - N));
+		System.out.println("Valor Numerico del caracter 'a' = "+(int) C);
 
 	}
 
