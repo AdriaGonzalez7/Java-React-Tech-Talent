@@ -9,8 +9,8 @@ public class Tarea6Ejercicio04 {
 		System.out.println("Introduce un numero entero: ");
 		int num = Integer.parseInt(sc.nextLine());
 		System.out.println("El factorial de " + num + " es: " + Factorial(num));
-		
 	}
+	
 	
 	public static int Factorial(int num) {
 		int result= 1;
