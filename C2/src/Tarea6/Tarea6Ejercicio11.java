@@ -17,19 +17,19 @@ public class Tarea6Ejercicio11 {
         System.out.println("El array resultante de la multiplicación es: " + Arrays.toString(array3));
     }
 
-     public static int[] RandomArray1() {
+     public static int[] RandomArray1() {		
             Random rand = new Random();
             Scanner sc = new Scanner(System.in);
             
             System.out.println("Introduce el tamaño del array 1: ");
             int rango1 = sc.nextInt();
-            int lista11[] = new int[rango1];
+            int lista1[] = new int[rango1];
 
-            for (int i = 0; i < lista11.length; i++) {
-                lista11[i] = rand.nextInt(15) + 1;  
+            for (int i = 0; i < lista1.length; i++) {
+                lista1[i] = rand.nextInt(15) + 1;  
             }
 
-            return lista11; 
+            return lista1; 
         }
      public static int[] CopiarArray(int [] ArrayOriginal) {
          int[] CopiaArray = new int[ArrayOriginal.length];
