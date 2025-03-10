@@ -26,6 +26,8 @@ public class Tarea6Ejercicio01 {
 			int altura = Integer.parseInt(sc.nextLine());
 			System.out.println("El área del triángulo es: " + areatriangulo(base, altura));
             break;
+         default:
+        	             System.out.println("La figura no es válida");
 		}
 	}
 
