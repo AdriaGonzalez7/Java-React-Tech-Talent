@@ -12,11 +12,13 @@ public class Tarea7Ejercicio01 {
 	
 	public static ArrayList<Double> pedirNotas(){
 		double notaAlumno = 0.0;
+		
 		ArrayList<Double> lista = new ArrayList<Double>();
 		System.out.println("Calculadora de notas");
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Numero de notas: ");
 		int numNotas = sc.nextInt();
+		
 		for ( int i = 0; i < numNotas; i++) {
 			do {
 				System.out.println("Introduce una nota del 1-10: ");
