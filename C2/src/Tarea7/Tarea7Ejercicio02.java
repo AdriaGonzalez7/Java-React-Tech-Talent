@@ -10,7 +10,7 @@ public class Tarea7Ejercicio02 {
         ArrayList<Double> carrito = RellenarArrayList();
         ArrayList<Double> listaIVA = ArrayIVA(carrito);
         suma(listaIVA);
-
+        cambio(suma(listaIVA));
     }
 
     public static ArrayList<Double> RellenarArrayList() {
@@ -43,7 +43,7 @@ public class Tarea7Ejercicio02 {
                 System.out.print("Introduce el IVA para el producto " + (i + 1) + " (21 o 4): ");
                 IVA = sc.nextDouble();
             } while (IVA != 21 && IVA != 4);
-
+         
             listaIVA.add(IVA);
         }
 
@@ -64,6 +64,16 @@ public class Tarea7Ejercicio02 {
         System.out.println("Precio Total: " + sum);
     	return sum;
     }
+    
+    public static double cambio(Double sum) {
+    	Scanner sc = new Scanner(System.in);
+    	System.out.println("Importe introducido: ");
+    	double pago = sc.nextDouble();
+    	double cambio = pago - sum;
+    	System.out.println("El cambio es:" + cambio);
+    	return cambio;
+  }
+
     
 }
 
