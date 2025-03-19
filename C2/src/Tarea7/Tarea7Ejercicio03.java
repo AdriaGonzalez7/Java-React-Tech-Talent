@@ -85,21 +85,17 @@ public class Tarea7Ejercicio03 {
 
     private static void procesarProductoCliente(String producto, Hashtable<String, Double> Precio, Hashtable<String, Integer> Stock, Hashtable<String, Double> Cesta) {
         String PregProd = JOptionPane.showInputDialog("Introduzca la cantidad de " + producto + " deseada:");
-        try {
-            int PregProd2 = Integer.parseInt(PregProd);
-            if (PregProd2 > Stock.get(producto)) {
-                JOptionPane.showMessageDialog(null, "No hay suficiente stock.");
-            } else if (PregProd2 <= 0) {
-                JOptionPane.showMessageDialog(null, "No puede comprar 0 o menos productos.");
-            } else {
-                double PrecioProducto = Precio.get(producto);
-                double PrecioProducto2 = PrecioProducto * PregProd2;
-                Cesta.put(producto, PrecioProducto2);
-                Stock.put(producto, Stock.get(producto) - PregProd2);
-                JOptionPane.showMessageDialog(null, "Ha añadido " + producto + " a su cesta.\nEl precio total es de " + PrecioProducto2 + "€.");
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Cantidad no válida.");
+        int PregProd2 = Integer.parseInt(PregProd);
+        if (PregProd2 > Stock.get(producto)) {
+            JOptionPane.showMessageDialog(null, "No hay suficiente stock.");
+        } else if (PregProd2 <= 0) {
+            JOptionPane.showMessageDialog(null, "No puede comprar 0 o menos productos.");
+        } else {
+            double PrecioProducto = Precio.get(producto);
+            double PrecioProducto2 = PrecioProducto * PregProd2;
+            Cesta.put(producto, PrecioProducto2);
+            Stock.put(producto, Stock.get(producto) - PregProd2);
+            JOptionPane.showMessageDialog(null, "Ha añadido " + producto + " a su cesta.\nEl precio total es de " + PrecioProducto2 + "€.");
         }
     }
 
@@ -115,6 +111,7 @@ public class Tarea7Ejercicio03 {
         double Cambio = Math.round((Pago - PrecioFinal) * 100.0) / 100.0;
         JOptionPane.showMessageDialog(null, "Gracias por su compra.\nEl total es de " + PrecioFinal + "€.\nHa pagado con " + Pago + "€.\nSu cambio es de " + Cambio + "€.\n¡Vuelva pronto!");
         Cesta.clear();
+        
     }
 
     private static void interfazEmpleado(Hashtable<String, Integer> Stock, Hashtable<String, Double> Precio) {
@@ -156,20 +153,17 @@ public class Tarea7Ejercicio03 {
 
     private static void añadirProducto(Hashtable<String, Integer> Stock, Hashtable<String, Double> Precio) {
         String ProductoNuevo = JOptionPane.showInputDialog("Introduce el nombre del producto nuevo:");
-        try {
-            String PrecioNuevo = JOptionPane.showInputDialog("Introduce el precio por unidad:");
-            double PrecioNuevo2 = Double.parseDouble(PrecioNuevo);
+        String PrecioNuevo = JOptionPane.showInputDialog("Introduce el precio por unidad:");
+        double PrecioNuevo2 = Double.parseDouble(PrecioNuevo);
 
-            String StockNuevo = JOptionPane.showInputDialog("Introduce la cantidad de stock para añadir al almacén:");
-            int StockNuevo2 = Integer.parseInt(StockNuevo);
+        String StockNuevo = JOptionPane.showInputDialog("Introduce la cantidad de stock para añadir al almacén:");
+        int StockNuevo2 = Integer.parseInt(StockNuevo);
 
-            Precio.put(ProductoNuevo.toLowerCase(), PrecioNuevo2);
-            Stock.put(ProductoNuevo.toLowerCase(), StockNuevo2);
-            JOptionPane.showMessageDialog(null, "Producto añadido correctamente.");
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Datos no válidos. Asegúrese de introducir valores numéricos.");
-        }
+        Precio.put(ProductoNuevo.toLowerCase(), PrecioNuevo2);
+        Stock.put(ProductoNuevo.toLowerCase(), StockNuevo2);
+        JOptionPane.showMessageDialog(null, "Producto añadido correctamente.");
     }
+    
 
     private static double sumarPrecios(Hashtable<String, Double> productos) {
         double suma = 0.0;
