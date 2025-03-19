@@ -1,89 +1,187 @@
 package Tarea7;
 
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Hashtable;
-
 import javax.swing.JOptionPane;
 
 public class Tarea7Ejercicio03 {
 
-	
-	 public static void main(String[] args) {
-	        HashMap<String, Object> miHashtable = crearHashtable();
-	        System.out.println(miHashtable);
-	        miHashtable = modificarHashtable(miHashtable);
-	        System.out.println("Productos modificados: " + miHashtable);
-	        listarHashtable(miHashtable);
+    public static void main(String[] args) {
+        Hashtable<String, Double> Precio = inicializarPrecios();
+        Hashtable<String, Integer> Stock = inicializarStock();
+        Hashtable<String, Double> Cesta = new Hashtable<>();
 
-	    
-	 public static HashMap<String, Object> crearHashtable() {
-	        HashMap<Double, Integer> propiedades = new HashMap<>();
-	        HashMap<String, Object> contenedor = new HashMap<>();
-	        contenedor.put("Manzana", propiedades);
-	        contenedor.put("Pera", propiedades);
-	        contenedor.put("Aguacate", propiedades);
-	        contenedor.put("Patatas", propiedades);
-	        contenedor.put("Chorizo", propiedades);
-	        contenedor.put("Fuet", propiedades);
-	        contenedor.put("Queso", propiedades);
-	        contenedor.put("Pizza", propiedades);
-	        contenedor.put("Harina", propiedades);
-	        contenedor.put("Huevo", propiedades);
-	        
-	        propiedades.put(3.0, 5);
-	        propiedades.put(4.0, 3);
-	        propiedades.put(3.5, 5);
-	        propiedades.put(5.0, 2);
-	        propiedades.put(5.6, 7);
-	        propiedades.put(8.0, 9);
-	        propiedades.put(4.3, 12);
-	        propiedades.put(6.5, 7);
-	        propiedades.put(2.2, 7);
-	        propiedades.put(1.5, 22);
+        ejecutarAplicacion(Precio, Stock, Cesta);
+    }
 
-	        return contenedor;
-	 } 
+    private static void ejecutarAplicacion(Hashtable<String, Double> Precio, Hashtable<String, Integer> Stock, Hashtable<String, Double> Cesta) {
+        boolean Volver = false;
+        do {
+            String Inicio = JOptionPane.showInputDialog("Bienvenido:\n¿Quién es usted?\n1.Cliente\n2.Empleado");
+            String respuesta = Inicio != null ? Inicio.toLowerCase() : "";
 
-	 
-	 public static HashMap<String, Object> modificarHashtable(HashMap<String, Object> propiedades, HashMap<String, Object> contenedor){
-		 
-		 while (true) {
-	            String newProduct = JOptionPane.showInputDialog("Añade un nuevo producto o deja vacío para salir:");
-	            
-	            if (newProduct == null || newProduct.trim().isEmpty()) {
-	                break;
-	            }
-	            
-	            String stock = JOptionPane.showInputDialog("Añade la cantidad del producto:");
-	            
-	            if (stock == null || stock.trim().isEmpty()) {
-	                JOptionPane.showMessageDialog(null, "Debes ingresar una cantidad válida.");
-	                continue;
-	            }
-	            String newPrecio = JOptionPane.showInputDialog("Añade el precio del producto o deja vacío para salir:");
-	            
-	            if (newPrecio == null || newPrecio.trim().isEmpty()) {
-	                break;
-	            }
-	            contenedor.put(newProduct, propiedades);
-	            propiedades.put(stock, newPrecio);
-	            
+            switch (respuesta) {
+                case "1":
+                case "cliente":
+                    interfazCliente(Precio, Stock, Cesta);
+                    break;
+                case "2":
+                case "empleado":
+                    interfazEmpleado(Stock, Precio);
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "Opción no válida. Intente de nuevo.");
+            }
+        } while (!Volver);
+    }
 
-		 }
-		 return contenedor;
-	 }
-	 
-	 public static HashMap<String, Object> listarHashtable(HashMap<String, Object> contenedor){
-         JOptionPane.showMessageDialog(null, "Consulta un producto");
-         String consultProduct = JOptionPane.showInputDialog("Que prodcuto quieres consultar:");
-         System.out.println(contenedor.get(consultProduct));
-         return contenedor;
+    private static Hashtable<String, Double> inicializarPrecios() {
+        Hashtable<String, Double> Precio = new Hashtable<>();
+        Precio.put("manzana", 2.5);
+        Precio.put("pera", 2.5);
+        Precio.put("pizza", 4.35);
+        Precio.put("salchicha", 6.25);
+        Precio.put("lasaña", 5.1);
+        Precio.put("piña", 3.0);
+        Precio.put("lomo", 4.2);
+        Precio.put("berenjena", 2.35);
+        Precio.put("platano", 1.25);
+        Precio.put("patatas", 5.0);
+        return Precio;
+    }
 
+    private static Hashtable<String, Integer> inicializarStock() {
+        Hashtable<String, Integer> Stock = new Hashtable<>();
+        Stock.put("manzana", 27);
+        Stock.put("pera", 19);
+        Stock.put("pizza", 12);
+        Stock.put("salchicha", 13);
+        Stock.put("lasaña", 20);
+        Stock.put("piña", 15);
+        Stock.put("lomo", 11);
+        Stock.put("berenjena", 15);
+        Stock.put("platano", 12);
+        Stock.put("patatas", 26);
+        return Stock;
+    }
 
-	 }
+    private static void interfazCliente(Hashtable<String, Double> Precio, Hashtable<String, Integer> Stock, Hashtable<String, Double> Cesta) {
+        boolean FinCesta = false;
+        do {
+            String Añadir = JOptionPane.showInputDialog("Bienvenido a la tienda:\n¿Qué producto desea comprar?\nEscriba 'final' para acabar su cesta.");
+            String producto = Añadir != null ? Añadir.toLowerCase() : "";
 
+            if ("final".equals(producto)) {
+                FinCesta = true;
+            } else if (Stock.containsKey(producto)) {
+                procesarProductoCliente(producto, Precio, Stock, Cesta);
+            } else {
+                JOptionPane.showMessageDialog(null, "No está bien escrito o no existe.");
+            }
+        } while (!FinCesta);
+
+        finalizarCompra(Cesta);
+    }
+
+    private static void procesarProductoCliente(String producto, Hashtable<String, Double> Precio, Hashtable<String, Integer> Stock, Hashtable<String, Double> Cesta) {
+        String PregProd = JOptionPane.showInputDialog("Introduzca la cantidad de " + producto + " deseada:");
+        try {
+            int PregProd2 = Integer.parseInt(PregProd);
+            if (PregProd2 > Stock.get(producto)) {
+                JOptionPane.showMessageDialog(null, "No hay suficiente stock.");
+            } else if (PregProd2 <= 0) {
+                JOptionPane.showMessageDialog(null, "No puede comprar 0 o menos productos.");
+            } else {
+                double PrecioProducto = Precio.get(producto);
+                double PrecioProducto2 = PrecioProducto * PregProd2;
+                Cesta.put(producto, PrecioProducto2);
+                Stock.put(producto, Stock.get(producto) - PregProd2);
+                JOptionPane.showMessageDialog(null, "Ha añadido " + producto + " a su cesta.\nEl precio total es de " + PrecioProducto2 + "€.");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Cantidad no válida.");
+        }
+    }
+
+    private static void finalizarCompra(Hashtable<String, Double> Cesta) {
+        final double IVA = 0.21;
+        double PrecioFinal = añadirIVA(sumarPrecios(Cesta), IVA);
+        double Pago;
+        do {
+            String Pagar = JOptionPane.showInputDialog("El total es de " + PrecioFinal + "€.\n¿Con cuánto piensa pagar?");
+            Pago = Double.parseDouble(Pagar);
+        } while (Pago < PrecioFinal);
+
+        double Cambio = Math.round((Pago - PrecioFinal) * 100.0) / 100.0;
+        JOptionPane.showMessageDialog(null, "Gracias por su compra.\nEl total es de " + PrecioFinal + "€.\nHa pagado con " + Pago + "€.\nSu cambio es de " + Cambio + "€.\n¡Vuelva pronto!");
+        Cesta.clear();
+    }
+
+    private static void interfazEmpleado(Hashtable<String, Integer> Stock, Hashtable<String, Double> Precio) {
+        boolean Final = false;
+        do {
+            String Respuesta = JOptionPane.showInputDialog("Interfaz Empleado:\n¿Qué desea hacer?\n1. Consultar Productos\n2. Añadir Producto\nEscriba 'salir' para finalizar.");
+            Respuesta = Respuesta != null ? Respuesta.toLowerCase() : "";
+
+            switch (Respuesta) {
+                case "1":
+                case "consultar":
+                    consultarProductos(Stock, Precio);
+                    break;
+                case "2":
+                case "añadir":
+                    añadirProducto(Stock, Precio);
+                    break;
+                case "salir":
+                    Final = true;
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "Opción no válida.");
+            }
+        } while (!Final);
+    }
+
+    private static void consultarProductos(Hashtable<String, Integer> Stock, Hashtable<String, Double> Precio) {
+        StringBuilder productos = new StringBuilder();
+        for (String producto : Stock.keySet()) {
+            productos.append(producto.toUpperCase())
+                .append(": ")
+                .append(Stock.get(producto))
+                .append(" unidades, ")
+                .append(Precio.get(producto))
+                .append("€/u\n");
+        }
+        JOptionPane.showMessageDialog(null, productos.toString());
+    }
+
+    private static void añadirProducto(Hashtable<String, Integer> Stock, Hashtable<String, Double> Precio) {
+        String ProductoNuevo = JOptionPane.showInputDialog("Introduce el nombre del producto nuevo:");
+        try {
+            String PrecioNuevo = JOptionPane.showInputDialog("Introduce el precio por unidad:");
+            double PrecioNuevo2 = Double.parseDouble(PrecioNuevo);
+
+            String StockNuevo = JOptionPane.showInputDialog("Introduce la cantidad de stock para añadir al almacén:");
+            int StockNuevo2 = Integer.parseInt(StockNuevo);
+
+            Precio.put(ProductoNuevo.toLowerCase(), PrecioNuevo2);
+            Stock.put(ProductoNuevo.toLowerCase(), StockNuevo2);
+            JOptionPane.showMessageDialog(null, "Producto añadido correctamente.");
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Datos no válidos. Asegúrese de introducir valores numéricos.");
+        }
+    }
+
+    private static double sumarPrecios(Hashtable<String, Double> productos) {
+        double suma = 0.0;
+        Enumeration<Double> precios = productos.elements();
+        while (precios.hasMoreElements()) {
+            suma += precios.nextElement();
+        }
+        return suma;
+    }
+
+    private static double añadirIVA(double precio, double iva) {
+        double total = precio + (precio * iva);
+        return Math.round(total * 100.0) / 100.0;
+    }
 }
-	 
-
-
