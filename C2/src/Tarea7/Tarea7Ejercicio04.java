@@ -4,7 +4,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import javax.swing.JOptionPane;
 
-public class Tarea7Ejercicio03 {
+public class Tarea7Ejercicio04 {
 
     public static void main(String[] args) {
         Hashtable<String, Double> Precio = inicializarPrecios();
