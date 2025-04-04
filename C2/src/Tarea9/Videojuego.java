@@ -1,6 +1,6 @@
 package Tarea9;
 
-public class Videojuego {
+public class Videojuego implements Entregable {
 	
 	//Atributos
 	protected String titulo;
@@ -81,8 +81,30 @@ public class Videojuego {
 				+ ", genero=" + genero + ", compañia=" + company + "]";
 	}
 	
+	@Override
+	public void entregar() {
+		this.entregado = true;
+	}
 	
+
+	@Override
+	public void devolver() {
+		this.entregado = false;
+	}
+
+	@Override
+	public boolean isEntregado() {
+		return this.entregado;
+	}
 	
-	
+	// Compara los videojuegos por las horas estimadas
+    @Override
+    public int compareTo(Object a) {
+        if(a instanceof Videojuego) {
+            Videojuego otroVideojuego = (Videojuego) a;
+            return Integer.compare(this.horas_estimadas, otroVideojuego.getHoras_estimadas());
+        }
+        return 0;
+    }
 	
 }

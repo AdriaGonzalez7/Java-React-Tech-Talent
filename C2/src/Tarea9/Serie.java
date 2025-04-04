@@ -1,6 +1,6 @@
 package Tarea9;
 
-public class Serie {
+public class Serie implements Entregable {
 	//Atributos
 	protected String titulo;
 	protected int num_temporadas;
@@ -82,5 +82,34 @@ public class Serie {
 		return "Serie [titulo=" + titulo + ", num_temporadas=" + num_temporadas + ", entregado=" + entregado
 				+ ", genero=" + genero + ", creador=" + creador + "]";
 	}
+	
+	   // Implementación de los métodos de la interfaz Entregable
+    @Override
+    public void entregar() {
+        this.entregado = true;
+    }
+    
+    @Override
+    public void devolver() {
+        this.entregado = false;
+    }
+    
+    @Override
+    public boolean isEntregado() {
+        return this.entregado;
+    }
+    
+ // Compara las series por el número de temporadas.
+    @Override
+    public int compareTo(Object a) {
+        if(a instanceof Serie) {
+            Serie otraSerie = (Serie) a;
+            // Se utiliza Integer.compare para devolver -1, 0 o 1 según corresponda
+            return Integer.compare(this.num_temporadas, otraSerie.getNum_temporadas());
+        }
+        return 0;
+    }
+	
+	
 }
 	
