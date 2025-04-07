@@ -4,53 +4,50 @@ import java.util.Random;
 
 public class Prueba {
     public static void main(String[] args) {
-        // Initialize the 8x9 array of Seat objects
-        Asiento[][] asientos = new Asiento[8][9];
+        // Lista de 10 películas
+        Pelicula[] peliculas = {
+            new Pelicula("Interstellar", 169, 10, "Christopher Nolan"),
+            new Pelicula("Parasite", 132, 16, "Bong Joon-ho"),
+            new Pelicula("The Lion King", 88, 3, "Jon Favreau"),
+            new Pelicula("Avengers: Endgame", 181, 13, "Anthony y Joe Russo"),
+            new Pelicula("Titanic", 195, 12, "James Cameron"),
+            new Pelicula("The Matrix", 136, 15, "Lana y Lilly Wachowski"),
+            new Pelicula("Toy Story 4", 100, 3, "Josh Cooley"),
+            new Pelicula("Joker", 122, 18, "Todd Phillips"),
+            new Pelicula("La La Land", 128, 10, "Damien Chazelle"),
+            new Pelicula("Star Wars: The Empire Strikes Back", 124, 10, "Irvin Kershner")
+        };
 
-        // Fill the array with Seat objects
-        char letter = 'A';
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 8; j++) {
-                asientos[j][i] = new Asiento(letter + String.valueOf(8 - j));
-            }
-            letter++;
-        }
-
-        // Print the array
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 9; j++) {
-                System.out.print(asientos[i][j].getIdentifier() + " ");
-            }
-            System.out.println();
-        }
-
-        // Randomly mark seats as taken
-        ocuparAsientosRandom(asientos, 30);
-
-        // Print the array with seat statuses
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 9; j++) {
-                System.out.print(asientos[i][j].getIdentifier() + (asientos[i][j].isTaken() ? " (X)" : " ( )") + " ");
-            }
-            System.out.println();
-        }
-    }
-
-    // Method to randomly mark a specified number of seats as taken
-    public static void ocuparAsientosRandom(Asiento[][] asientos, int numAsientos) {
+        // Seleccionar una película aleatoria
         Random random = new Random();
-        int filas = asientos.length;
-        int cols = asientos[0].length;
-        int asientosMarcados = 0;
+        Pelicula peliculaSeleccionada = peliculas[random.nextInt(peliculas.length)];
 
-        while (asientosMarcados < numAsientos) {
-            int row = random.nextInt(filas);
-            int col = random.nextInt(cols);
+        // Crear el cine con la película seleccionada
+        Cine cine = new Cine(peliculaSeleccionada);
 
-            if (!asientos[row][col].isTaken()) {
-                asientos[row][col].setTaken(true);
-                asientosMarcados++;
-            }
+        // Mostrar la película seleccionada
+        System.out.println("Película actual:");
+        System.out.println(cine.getPelicula());
+        System.out.println();
+
+        // Generar un número aleatorio de espectadores (entre 10 y 50)
+        int numEspectadores = 10 + random.nextInt(41); // Genera un número entre 10 y 50
+
+        // Crear espectadores aleatorios y sentarlos
+        for (int i = 0; i < numEspectadores; i++) {
+            String nombre = "Espectador" + (i + 1); // Nombre del espectador
+            int edad = random.nextInt(60);         // Edad aleatoria entre 0 y 59
+            double dinero = random.nextDouble() * 20; // Dinero aleatorio entre 0 y 20
+
+            // Crear un espectador con los datos aleatorios
+            Espectador espectador = new Espectador(nombre, edad, dinero);
+
+            // Intentar sentarlo en un asiento aleatorio
+            cine.sentarEspectadorAleatorio(espectador);
         }
+
+        // Mostrar el estado final de los asientos
+        System.out.println("\nEstado final de los asientos:");
+        cine.mostrarAsientos();
     }
 }
