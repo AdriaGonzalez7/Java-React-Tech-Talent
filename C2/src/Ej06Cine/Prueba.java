@@ -31,12 +31,12 @@ public class Prueba {
         System.out.println();
 
         // Generar un número aleatorio de espectadores (entre 10 y 50)
-        int numEspectadores = 10 + random.nextInt(41); // Genera un número entre 10 y 50
+        int numEspectadores = 10 + random.nextInt(30); // Genera un número entre 10 y 50
 
         // Crear espectadores aleatorios y sentarlos
         for (int i = 0; i < numEspectadores; i++) {
             String nombre = "Espectador" + (i + 1); // Nombre del espectador
-            int edad = random.nextInt(60);         // Edad aleatoria entre 0 y 59
+            int edad = random.nextInt(120);         // Edad aleatoria entre 0 y 59
             double dinero = random.nextDouble() * 20; // Dinero aleatorio entre 0 y 20
 
             // Crear un espectador con los datos aleatorios
@@ -45,7 +45,17 @@ public class Prueba {
             // Intentar sentarlo en un asiento aleatorio
             cine.sentarEspectadorAleatorio(espectador);
         }
-
+        // Mostrar el estado inicial de los asientos
+        cine.mostrarAsientos();
+        // Introducir espectador manualmente con joptionpane
+        String nombre = javax.swing.JOptionPane.showInputDialog("Introduce el nombre del espectador:");
+        int edad = Integer.parseInt(javax.swing.JOptionPane.showInputDialog("Introduce la edad del espectador:"));
+        double dinero = Double.parseDouble(javax.swing.JOptionPane.showInputDialog("Introduce el dinero disponible del espectador:"));
+        
+        Espectador espectadorManual = new Espectador(nombre, edad, dinero);
+        cine.sentarEspectadorManual(espectadorManual);
+              
+        
         // Mostrar el estado final de los asientos
         System.out.println("\nEstado final de los asientos:");
         cine.mostrarAsientos();

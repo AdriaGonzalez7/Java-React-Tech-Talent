@@ -2,6 +2,8 @@ package Ej06Cine;
 
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+
 public class Cine {
     private final double precio = 7.50; // Precio fijo de la entrada
     private Asiento[][] asientos = new Asiento[8][9]; // Matriz de asientos (8 filas x 9 columnas)
@@ -35,6 +37,34 @@ public class Cine {
             System.out.println();
         }
     }
+    
+    public void sentarEspectadorManual(Espectador espectador) {
+        // Validación de edad mínima
+        if (espectador.getEdad() < pelicula.getEdadMinima()) {
+        	JOptionPane.showMessageDialog(null, "El espectador no cumple la edad mínima para ver la película.");
+            return; // El espectador no cumple la edad mínima y no se intenta sentarlo
+        }
+
+        // Validación de dinero disponible
+        if (espectador.getDineroDisponible() < precio) {
+        	JOptionPane.showMessageDialog(null, "El espectador no tiene suficiente dinero para comprar la entrada.");
+            return; // El espectador no tiene suficiente dinero y no se intenta sentarlo
+        }
+        for (int intentos = 0; intentos < 100; intentos++) { // Máximo 100 intentos aleatorios
+            int fila = Integer.parseInt(javax.swing.JOptionPane.showInputDialog("Introduce el numero de fila:")); // Fila aleatoria (0 a 7)
+            int columna = Integer.parseInt(javax.swing.JOptionPane.showInputDialog("Introduce el numero de columna:")); // Columna aleatoria (0 a 8)
+
+            if (!asientos[fila][columna].isTaken()) { // Si el asiento está libre
+                asientos[fila][columna].setTaken(true); // Marcar como ocupado
+                return; // Se asignó el asiento, no necesitamos más intentos
+            }
+            else {
+            	JOptionPane.showMessageDialog(null, "El asiento ya está ocupado.");
+            	 intentos++; // El asiento ya está ocupado y no se intenta sentar al espectador
+            }
+        }
+    }
+        
 
     // Sentar al espectador en un asiento aleatorio disponible
     public void sentarEspectadorAleatorio(Espectador espectador) {
