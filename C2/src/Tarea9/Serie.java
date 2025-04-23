@@ -75,7 +75,6 @@ public class Serie implements Entregable {
 		
 	}
 	
-	//Sobrescribir el metodo toString()
 	
 	@Override
 	public String toString() {
@@ -83,7 +82,6 @@ public class Serie implements Entregable {
 				+ ", genero=" + genero + ", creador=" + creador + "]";
 	}
 	
-	   // Implementación de los métodos de la interfaz Entregable
     @Override
     public void entregar() {
         this.entregado = true;
@@ -104,7 +102,6 @@ public class Serie implements Entregable {
     public int compareTo(Object a) {
         if(a instanceof Serie) {
             Serie otraSerie = (Serie) a;
-            // Se utiliza Integer.compare para devolver -1, 0 o 1 según corresponda
             return Integer.compare(this.num_temporadas, otraSerie.getNum_temporadas());
         }
         return 0;
