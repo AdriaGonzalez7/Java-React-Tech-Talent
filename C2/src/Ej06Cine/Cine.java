@@ -17,9 +17,9 @@ public class Cine {
 
 	private void inicializarAsientos() {
 		char letra = 'A';
-		for (int i = 0; i < 9; i++) { // Columnas
-			for (int j = 0; j < 8; j++) { // Filas
-				asientos[j][i] = new Asiento(letra + String.valueOf(8 - j)); // Etiqueta como "8A", "7B", etc.
+		for (int i = 0; i < 9; i++) { 
+			for (int j = 0; j < 8; j++) { 
+				asientos[j][i] = new Asiento(letra + String.valueOf(8 - j)); 
 			}
 			letra++;
 		}
@@ -57,12 +57,11 @@ public class Cine {
 				asientos[fila][columna].setTaken(true);
 			} else {
 				JOptionPane.showMessageDialog(null, "El asiento ya está ocupado.");
-				intentos--; // El asiento ya está ocupado y no se intenta sentar al espectador
+				intentos--; 
 			}
 		}
 	}
 
-	// Sentar al espectador en un asiento aleatorio disponible
 	public void sentarEspectadorAleatorio(Espectador espectador) {
 		// Validación de edad mínima
 		if (espectador.getEdad() < pelicula.getEdadMinima()) {

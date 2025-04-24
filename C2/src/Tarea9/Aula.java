@@ -16,7 +16,7 @@ public class Aula {
         estudiantes = new ArrayList<>();
     }
 
-    // Getters
+    // Getters y Setters
     public int getId() {
         return id;
     }
@@ -37,12 +37,10 @@ public class Aula {
         return estudiantes;
     }
 
-    // Asignar profesor
     public void setProfesor(Profesor profesor) {
         this.profesor = profesor;
     }
 
-    // Método para añadir estudiantes (siempre se registran en el aula, aunque hagan novillos)
     public boolean añadirEstudiante(Estudiante e) {
         if (estudiantes.size() < maxEstudiantes) {
             estudiantes.add(e);
@@ -51,8 +49,6 @@ public class Aula {
         return false;
     }
 
-    // Determinar si se puede impartir la clase:
-    // Requisitos: profesor asignado, profesor disponible, profesor imparte la materia del aula y >50% de estudiantes presentes
     public boolean puedeDarseClase() {
         if (profesor == null) {
             System.out.println("No hay profesor asignado.");
@@ -90,8 +86,6 @@ public class Aula {
         return true;
     }
 
-    // Imprime cuantos alumnos y alumnas están aprobados.
-    // Se considera aprobado si la calificación es igual o mayor a 5.0.
     public void imprimirAlumnosAprobados() {
         if (puedeDarseClase()) {
             int aprobadosMasculinos = 0;

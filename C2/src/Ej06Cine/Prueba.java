@@ -30,7 +30,6 @@ public class Prueba {
 
         int numEspectadores = 10 + random.nextInt(30); 
 
-        // Crear espectadores aleatorios y sentarlos
         for (int i = 0; i < numEspectadores; i++) {
             String nombre = "Espectador" + (i + 1); 
             int edad = random.nextInt(120);         
@@ -42,7 +41,6 @@ public class Prueba {
             // Intentar sentarlo en un asiento aleatorio
             cine.sentarEspectadorAleatorio(espectador);
         }
-        // Mostrar el estado inicial de los asientos
         cine.mostrarAsientos();
         // Introducir espectador manualmente con joptionpane
         String nombre = javax.swing.JOptionPane.showInputDialog("Introduce el nombre del espectador:");
