@@ -1,8 +1,11 @@
-package Tarea9;
+package Tarea9.Ej05PersonaAula;
 
 public class TestAula {
     public static void main(String[] args) {
         Aula aula = new Aula(101, 30, "Matemáticas");
+        
+//        Persona persona1 = new Persona("Ana Gómez", 20, "F");
+//        No se puede instanciar porque es clase objeto Persona abstract
 
         Profesor profesor = new Profesor("Juan Pérez", 45, "M", "Matemáticas");
         aula.setProfesor(profesor);

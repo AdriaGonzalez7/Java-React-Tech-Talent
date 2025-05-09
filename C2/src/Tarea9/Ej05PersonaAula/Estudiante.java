@@ -1,4 +1,4 @@
-package Tarea9;
+package Tarea9.Ej05PersonaAula;
 
 public class Estudiante extends Persona{
 
