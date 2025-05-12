@@ -53,4 +53,28 @@ CREATE TABLE Socio (
 CREATE TABLE Prestamo (
     ClaveSocio INT NOT NULL,
     ClaveEjemplar SMALLINT NOT NULL,
-)
+    NumeroOrden SMALLINT NOT NULL,
+    FechaPrestamo DATE NOT NULL,
+    FechaDevolucion DATE NOT NULL,
+    Notas BLOB,
+    PRIMARY KEY (ClaveSocio, ClaveEjemplar, NumeroOrden),
+    FOREIGN KEY (ClaveSocio) REFERENCES Socio (ClaveSocio),
+    FOREIGN KEY (ClaveEjemplar) REFERENCES Ejemplar (ClaveEjemplar)
+);
+
+CREATE TABLE Trata_sobre (
+    ClaveLibro INT NOT NULL,
+    ClaveTema SMALLINT NOT NULL,
+    PRIMARY KEY (ClaveLibro, ClaveTema),
+    FOREIGN KEY (ClaveLibro) REFERENCES Libro (ClaveLibro),
+    FOREIGN KEY (ClaveTema) REFERENCES Tema (ClaveTema)
+);
+
+CREATE TABLE Escrito_por (
+    ClaveLibro INT NOT NULL,
+    ClaveAutor INT NOT NULL,
+    PRIMARY KEY (ClaveLibro, ClaveAutor),
+    FOREIGN KEY (ClaveLibro) REFERENCES Libro (ClaveLibro),
+    FOREIGN KEY (ClaveAutor) REFERENCES Autor (ClaveAutor)
+);
+
