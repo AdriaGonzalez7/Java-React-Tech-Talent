@@ -12,5 +12,6 @@ CREATE TABLE Articulos (
     nombre VARCHAR(100) NOT NULL,
     precio INT NOT NULL, 
     fabricante INT NOT NULL,
-    PRIMARY KEY (codigo)
+    PRIMARY KEY (codigo),
+    FOREIGN KEY (fabricante) REFERENCES Fabricantes (codigo)
 );

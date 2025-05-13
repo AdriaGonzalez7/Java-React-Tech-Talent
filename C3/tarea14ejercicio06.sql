@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS cine;
-USE cine;
+CREATE DATABASE IF NOT EXISTS cine1;
+USE cine1;
 
 CREATE TABLE Peliculas (
     codigo INT NOT NULL,

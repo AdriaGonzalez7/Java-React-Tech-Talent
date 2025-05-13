@@ -1,5 +1,5 @@
 CREATE DATABASE IF NOT EXISTS estaciones;
-USE estacion;
+USE estaciones;
 
 CREATE TABLE Estacion (
     Identificador INT NOT NULL,
@@ -19,5 +19,5 @@ CREATE TABLE Muestra (
     HumedadMaxima DECIMAL(5,2) NOT NULL,
     VelocidadVientoMin DECIMAL(5,2) NOT NULL,
     VelocidadVientoMax DECIMAL(5,2) NOT NULL,
-    IdentificadorEstacion FOREIGN KEY REFERENCES Estacion (Identificador)
+    FOREIGN KEY (IdentificadorEstacion) REFERENCES Estacion (Identificador)
 );

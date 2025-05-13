@@ -1,14 +1,6 @@
 CREATE DATABASE IF NOT EXISTS Biblioteca;
 USE Biblioteca;
 
-CREATE TABLE Libro (
-    ClaveLibro INT NOT NULL,
-    Titulo VARCHAR(60) NOT NULL,
-    Idioma VARCHAR(15) NOT NULL,
-    Formato VARCHAR(15) NOT NULL,
-    ClaveEditorial INT NOT NULL,
-    PRIMARY KEY (ClaveLibro)
-);
 
 CREATE TABLE Tema (
     ClaveTema SMALLINT NOT NULL,
@@ -28,6 +20,16 @@ CREATE TABLE Editorial (
     Direccion VARCHAR(60) NOT NULL,
     Telefono VARCHAR(15) NOT NULL,
     PRIMARY KEY (ClaveEditorial)
+);
+
+CREATE TABLE Libro (
+    ClaveLibro INT NOT NULL,
+    Titulo VARCHAR(60) NOT NULL,
+    Idioma VARCHAR(15) NOT NULL,
+    Formato VARCHAR(15) NOT NULL,
+    ClaveEditorial SMALLINT NOT NULL,
+    PRIMARY KEY (ClaveLibro),
+    FOREIGN KEY (ClaveEditorial) REFERENCES Editorial (ClaveEditorial)
 );
 
 CREATE TABLE Ejemplar (

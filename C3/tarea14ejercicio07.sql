@@ -1,5 +1,5 @@
 CREATE DATABASE IF NOT EXISTS Los_Directores;
-USE DATABASE Los_Directores;
+USE Los_Directores;
 
 CREATE TABLE Despachos (
     numero INT NOT NULL,

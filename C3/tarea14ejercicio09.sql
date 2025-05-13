@@ -11,7 +11,7 @@ CREATE TABLE Proyectos (
     Id CHAR(4) NOT NULL,
     Nombre VARCHAR(255) NOT NULL,
     Horas INT NOT NULL,
-    PRIMARY KEY (Id) NOT NULL
+    PRIMARY KEY (Id)
 );
 
 CREATE TABLE Asignado_a (

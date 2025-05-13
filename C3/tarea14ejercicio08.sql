@@ -3,14 +3,14 @@ USE piezas_proveedores;
 
 CREATE TABLE Piezas (
     codigo INT NOT NULL,
-    nombre VARCHAR(10O) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
     PRIMARY KEY (codigo)
 );
 
 CREATE TABLE Proveedores (
     Id CHAR(4) NOT NULL,
     Nombre VARCHAR(100) NOT NULL,
-    PRIMARY KEY (Id) NOT NULL
+    PRIMARY KEY (Id) 
 );
 
 CREATE TABLE Suministra (
