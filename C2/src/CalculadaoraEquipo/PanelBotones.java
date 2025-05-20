@@ -68,8 +68,18 @@ public class PanelBotones extends JPanel {
                         case "+": resultado = operando1 + operando2; break;
                         case "-": resultado = operando1 - operando2; break;
                         case "×": resultado = operando1 * operando2; break;
-                        case "÷": resultado = operando2 != 0 ? operando1 / operando2 : 0; break;
-                        case "^": resultado = Math.pow(operando1, operando2); break;
+                        case "÷": 
+                        if (operando2 == 0) {
+                            campo.setFont(new Font("Consolas", Font.BOLD, 21));
+                            campo.setText("No puedes dividir entre 0, tonto");
+                            nuevoNumero = true;
+                            return; // Salir del método para que no se ejecute el resto
+                        } else {
+                            resultado = operando1 / operando2;
+                        }
+                        break;
+                        case "^": resultado = Math.pow(operando1, operando2); 
+                        break;
                     }
                     if (resultado % 1 == 0) {
                         campo.setText(String.valueOf((int) resultado));

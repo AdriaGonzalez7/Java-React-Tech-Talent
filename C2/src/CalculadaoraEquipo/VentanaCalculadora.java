@@ -20,8 +20,8 @@ public class VentanaCalculadora extends JFrame {
         campoResultado.setEditable(false); // Solo lectura
         campoResultado.setFont(new Font("Consolas", Font.BOLD, 30));
         campoResultado.setHorizontalAlignment(SwingConstants.RIGHT);
-        campoResultado.setBackground(Color.WHITE);
         campoResultado.setPreferredSize(new Dimension(400, 70));
+        getContentPane().setBackground(new Color(200, 0, 0)); // Rojo vibrante
 
         // Agregar a la parte de arriba
         add(campoResultado, BorderLayout.NORTH);
