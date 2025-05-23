@@ -33,11 +33,9 @@ public class PanelBotones extends JPanel {
 				JButton btn = new JButton(texto);
 				btn.setFont(new Font("Arial", Font.BOLD, 20));
 				btn.addActionListener(new BotonListener());
-
 				if (texto.equals("=")) {
 					btn.setFont(new Font("Arial", Font.BOLD, 24));
 				}
-
 				add(btn);
 			}
 		}
