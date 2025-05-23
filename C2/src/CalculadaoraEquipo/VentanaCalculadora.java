@@ -2,7 +2,7 @@ package CalculadaoraEquipo;
 
 import javax.swing.*;
 import java.awt.*;
-import CalculadaoraEquipo.HistorialBD;
+import java.awt.event.*;
 
 public class VentanaCalculadora extends JFrame {
 
@@ -23,6 +23,7 @@ public class VentanaCalculadora extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
+        // Barra de menú
         JMenuBar barraMenu = new JMenuBar();
         JMenu menuOpciones = new JMenu("Opciones");
 
@@ -35,10 +36,13 @@ public class VentanaCalculadora extends JFrame {
         itemTemaClaro.addActionListener(e -> cambiarTema(Tema.CLARO));
         itemTemaOscuro.addActionListener(e -> cambiarTema(Tema.OSCURO));
         itemTemaNeon.addActionListener(e -> cambiarTema(Tema.NEON));
+
+        // Mostrar historial desde la base de datos
         itemHistorial.addActionListener(e -> {
-            DefaultListModel<String> modeloDesdeBD = HistorialBD.obtenerHistorial(); // Recuperar datos de MySQL
+            DefaultListModel<String> modeloDesdeBD = HistorialBD.obtenerHistorial();
             listaHistorial.setModel(modeloDesdeBD);
-            JOptionPane.showMessageDialog(this, new JScrollPane(listaHistorial), "Historial de cálculos", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, new JScrollPane(listaHistorial),
+                    "Historial de cálculos", JOptionPane.INFORMATION_MESSAGE);
         });
 
         itemSalir.addActionListener(e -> System.exit(0));
@@ -52,6 +56,7 @@ public class VentanaCalculadora extends JFrame {
         barraMenu.add(menuOpciones);
         setJMenuBar(barraMenu);
 
+        // Área de resultados
         campoOperador = new JTextField();
         campoOperador.setEditable(false);
         campoOperador.setFont(new Font("Consolas", Font.BOLD, 16));
@@ -71,8 +76,13 @@ public class VentanaCalculadora extends JFrame {
 
         add(panelCampos, BorderLayout.NORTH);
 
+        // Panel de botones
         panelBotones = new PanelBotones(campoOperador, campoResultado, modeloHistorial);
         add(panelBotones, BorderLayout.CENTER);
+
+        // Cargar historial desde la base de datos al iniciar
+        modeloHistorial = HistorialBD.obtenerHistorial();
+        listaHistorial.setModel(modeloHistorial);
 
         cambiarTema(Tema.CLARO);
     }
@@ -94,10 +104,10 @@ public class VentanaCalculadora extends JFrame {
                 bordes = Color.LIGHT_GRAY;
                 break;
             case NEON:
-                fondo = new Color(30, 30, 40);//negro azulado
-                texto = new Color(180, 0, 255);//morado neon
-                botones = new Color(30, 30, 40); //Mismo color del fondo solo que se marca con borde
-                bordes = new Color(100, 255, 255);//Borde neon fino
+                fondo = new Color(30, 30, 40); // Negro azulado
+                texto = new Color(180, 0, 255); // Morado neón
+                botones = new Color(30, 30, 40); // Mismo color del fondo solo que se marca con borde
+                bordes = new Color(100, 255, 255); // Borde neón fino
                 break;
             default:
                 fondo = Color.WHITE;
@@ -116,4 +126,5 @@ public class VentanaCalculadora extends JFrame {
         SwingUtilities.updateComponentTreeUI(this);
     }
 }
+
    
