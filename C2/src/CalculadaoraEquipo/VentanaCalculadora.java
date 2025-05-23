@@ -2,6 +2,7 @@ package CalculadaoraEquipo;
 
 import javax.swing.*;
 import java.awt.*;
+import CalculadaoraEquipo.HistorialBD;
 
 public class VentanaCalculadora extends JFrame {
 
@@ -34,8 +35,12 @@ public class VentanaCalculadora extends JFrame {
         itemTemaClaro.addActionListener(e -> cambiarTema(Tema.CLARO));
         itemTemaOscuro.addActionListener(e -> cambiarTema(Tema.OSCURO));
         itemTemaNeon.addActionListener(e -> cambiarTema(Tema.NEON));
-        itemHistorial.addActionListener(e -> JOptionPane.showMessageDialog(this, new JScrollPane(listaHistorial),
-                "Historial de cálculos", JOptionPane.INFORMATION_MESSAGE));
+        itemHistorial.addActionListener(e -> {
+            DefaultListModel<String> modeloDesdeBD = HistorialBD.obtenerHistorial(); // Recuperar datos de MySQL
+            listaHistorial.setModel(modeloDesdeBD);
+            JOptionPane.showMessageDialog(this, new JScrollPane(listaHistorial), "Historial de cálculos", JOptionPane.INFORMATION_MESSAGE);
+        });
+
         itemSalir.addActionListener(e -> System.exit(0));
 
         menuOpciones.add(itemTemaClaro);
