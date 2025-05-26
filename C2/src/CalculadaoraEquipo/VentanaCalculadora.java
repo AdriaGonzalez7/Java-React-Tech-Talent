@@ -17,6 +17,7 @@ public class VentanaCalculadora extends JFrame {
     }
 
     public VentanaCalculadora() {
+   	 	setUndecorated(true);
         setTitle("Calculadora");
         setSize(400, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -85,6 +86,23 @@ public class VentanaCalculadora extends JFrame {
         listaHistorial.setModel(modeloHistorial);
 
         cambiarTema(Tema.CLARO);
+        pack();   
+        setMinimumSize(new Dimension(400, 500));
+        
+        
+     // Movimiento de ventana sin bordes
+        Point mouseClickPoint = new Point();
+        addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                mouseClickPoint.setLocation(e.getPoint());
+            }
+        });
+        addMouseMotionListener(new MouseMotionAdapter() {
+            public void mouseDragged(MouseEvent e) {
+                Point currentScreenLocation = e.getLocationOnScreen();
+                setLocation(currentScreenLocation.x - mouseClickPoint.x, currentScreenLocation.y - mouseClickPoint.y);
+            }
+        });
     }
 
     private void cambiarTema(Tema tema) {
