@@ -7,21 +7,29 @@ import javax.swing.DefaultListModel;
 public class HistorialBD {
     
     // Método para guardar una operación en la base de datos
-    public static void guardarOperacion(String operacion, double resultado) {
-        String sql = "INSERT INTO historial_operaciones (operacion, resultado) VALUES (?, ?)";
+	public static void guardarOperacion(String operacion, double resultado) {
+	    String sql = "INSERT INTO historial_operaciones (operacion, resultado) VALUES (?, ?)";
 
-        try (Connection conexion = ConnexionBD.obtenerConexion();
-             PreparedStatement stmt = conexion.prepareStatement(sql)) {
-            
-            stmt.setString(1, operacion);
-            stmt.setDouble(2, resultado);
-            stmt.executeUpdate();
-            
-            System.out.println("Operación guardada correctamente.");
-        } catch (SQLException e) {
-            System.out.println("Error al guardar la operación: " + e.getMessage());
-        }
-    }
+	    try (Connection conexion = ConnexionBD.obtenerConexion();
+	         PreparedStatement stmt = conexion.prepareStatement(sql)) {
+
+	        stmt.setString(1, operacion);
+	        stmt.setDouble(2, resultado);
+
+	        int filasAfectadas = stmt.executeUpdate();
+	        if (filasAfectadas > 0) {
+	            System.out.println("✅ Operación guardada correctamente.");
+	        } else {
+	            System.out.println("⚠ No se insertó ninguna fila en la base de datos.");
+	        }
+
+	    } catch (SQLException e) {
+	        System.out.println("Error al guardar la operación: " + e.getMessage());
+	        e.printStackTrace();  // ✅ Agregamos esto para ver detalles del error
+	    }
+	}
+
+
 
     // Método para recuperar todas las operaciones desde la base de datos
     public static void mostrarHistorial() {

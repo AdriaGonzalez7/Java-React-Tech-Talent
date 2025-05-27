@@ -17,7 +17,7 @@ public class VentanaCalculadora extends JFrame {
     }
 
     public VentanaCalculadora() {
-   	 	setUndecorated(true);
+        setUndecorated(true);
         setTitle("Calculadora");
         setSize(400, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -57,6 +57,31 @@ public class VentanaCalculadora extends JFrame {
         barraMenu.add(menuOpciones);
         setJMenuBar(barraMenu);
 
+        // **Añadir pronunciación de menú**
+        MouseAdapter pronunciarOpciones = new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                JMenuItem item = (JMenuItem) e.getSource();
+                EspeakTTS.hablar(item.getText());  // ✅ Pronunciar opción del menú
+            }
+        };
+        
+        // Añadir MouseListener para el menú principal
+        menuOpciones.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                EspeakTTS.hablar("Opciones");  // ✅ Pronuncia el nombre del menú
+            }
+        });
+
+
+        // Aplicar pronunciación a cada opción del menú
+        itemTemaClaro.addMouseListener(pronunciarOpciones);
+        itemTemaOscuro.addMouseListener(pronunciarOpciones);
+        itemTemaNeon.addMouseListener(pronunciarOpciones);
+        itemHistorial.addMouseListener(pronunciarOpciones);
+        itemSalir.addMouseListener(pronunciarOpciones);
+
         // Área de resultados
         campoOperador = new JTextField();
         campoOperador.setEditable(false);
@@ -86,11 +111,10 @@ public class VentanaCalculadora extends JFrame {
         listaHistorial.setModel(modeloHistorial);
 
         cambiarTema(Tema.CLARO);
-        pack();   
+        pack();
         setMinimumSize(new Dimension(400, 500));
-        
-        
-     // Movimiento de ventana sin bordes
+
+        // Movimiento de ventana sin bordes
         Point mouseClickPoint = new Point();
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
@@ -124,7 +148,7 @@ public class VentanaCalculadora extends JFrame {
             case NEON:
                 fondo = new Color(30, 30, 40); // Negro azulado
                 texto = new Color(180, 0, 255); // Morado neón
-                botones = new Color(30, 30, 40); // Mismo color del fondo solo que se marca con borde
+                botones = new Color(30, 30, 40); // Mismo color del fondo, con borde marcado
                 bordes = new Color(100, 255, 255); // Borde neón fino
                 break;
             default:
@@ -144,5 +168,3 @@ public class VentanaCalculadora extends JFrame {
         SwingUtilities.updateComponentTreeUI(this);
     }
 }
-
-   

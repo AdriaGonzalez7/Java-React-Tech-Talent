@@ -1,6 +1,8 @@
 package CalculadaoraEquipo;
 
 import javax.swing.*;
+
+import java.util.concurrent.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
@@ -15,6 +17,9 @@ public class PanelBotones extends JPanel {
 	private String operadorActual = "";
 	private double operando1 = 0;
 	private boolean nuevoNumero = true;
+	
+	private ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+	private Future<?> tareaActual;
 
 	public PanelBotones(JTextField campoOperador, JTextField campoResultado, DefaultListModel<String> modeloHistorial) {
 		this.campoOperador = campoOperador;
@@ -27,18 +32,50 @@ public class PanelBotones extends JPanel {
 				"+", "=", };
 
 		for (String texto : etiquetas) {
-			if (texto.equals("")) {
-				add(new JLabel());
-			} else {
-				JButton btn = new JButton(texto);
-				btn.setFont(new Font("Arial", Font.BOLD, 20));
-				btn.addActionListener(new BotonListener());
-				if (texto.equals("=")) {
-					btn.setFont(new Font("Arial", Font.BOLD, 24));
-				}
-				add(btn);
-			}
+		    if (texto.equals("")) {
+		        add(new JLabel());
+		    } else {
+		        JButton btn = new JButton(texto);
+		        btn.setFont(new Font("Arial", Font.BOLD, 20));
+		        btn.addActionListener(new BotonListener());
+
+		        // **Agregar MouseListener para pronunciar números y operaciones**
+		        btn.addMouseListener(new MouseAdapter() {
+		            @Override
+		            public void mouseEntered(MouseEvent e) {
+		                final String textoBoton = btn.getText();  // Copia segura de `texto`
+
+		                if (tareaActual != null && !tareaActual.isDone()) {
+		                    tareaActual.cancel(true);  // Cancela la pronunciación anterior si aún no ha ocurrido
+		                }
+
+		                // Corregir signos matemáticos para pronunciación en español
+		                String textoProcesado = textoBoton.replace("-", "menos")
+		                                                  .replace("÷", "dividido por")
+		                                                  .replace("×", "multiplicado por")
+		                                                  .replace("^", "elevado a")
+		                                                  .replace("√", "raíz cuadrada de")
+                        								  .replace("←", "borrar último dígito")
+                        								  .replace("=", "igual a")
+                        								  .replace("C", "borrar todo")
+						  								  .replace(".", "punto decimal");
+
+                        								                         
+		                // Programar la pronunciación con un pequeño retras0 
+		                tareaActual = scheduler.schedule(() -> EspeakTTS.hablar(textoProcesado), 250, TimeUnit.MILLISECONDS);
+		            }
+		        });
+
+
+
+		        if (texto.equals("=")) {
+		            btn.setFont(new Font("Arial", Font.BOLD, 24));
+		        }
+
+		        add(btn);
+		    }
 		}
+
 	}
 
 	public void cambiarTema(Color fondo, Color texto, Color botones, Color bordes) {
@@ -54,21 +91,21 @@ public class PanelBotones extends JPanel {
 	}
 
 	private class BotonListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			String texto = ((JButton) e.getSource()).getText();
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+	        String texto = ((JButton) e.getSource()).getText();
 
-			if ("0123456789.".contains(texto)) {
-				if (nuevoNumero) {
-					campoResultado.setText(texto);
-					nuevoNumero = false;
-				} else {
-					campoResultado.setText(campoResultado.getText() + texto);
-				}
-
-				return;
-			}
-
+	        if ("0123456789.".contains(texto)) {
+	            if (nuevoNumero) {
+	                campoResultado.setText(texto);
+	                nuevoNumero = false;
+	            } else {
+	                campoResultado.setText(campoResultado.getText() + texto);
+	            }
+	            campoOperador.setText(campoOperador.getText() + " "+texto);
+	            return;
+	        }
+	    
 			switch (texto) {
 			case "+":
 			case "-":
@@ -102,23 +139,22 @@ public class PanelBotones extends JPanel {
 			        double resultado = calcularResultado(operando1, operando2);
 
 			        String resultadoFormateado = formatearNumero(resultado);
-			        String operando1Formateado = formatearNumero(operando1);
-			        String operando2Formateado = formatearNumero(operando2);
-
 			        campoResultado.setText(resultadoFormateado);
-			        campoOperador.setText(operando1Formateado + " " + operadorActual + " " + operando2Formateado);
-			        modeloHistorial.addElement(operando1Formateado + " " + operadorActual + " " + operando2Formateado + " = " + resultadoFormateado);
+
+			        // ✅ Guardar la operación en la base de datos
+			        HistorialBD.guardarOperacion(operando1 + " " + operadorActual + " " + operando2, resultado);
+
+			        // **Leer el resultado en voz alta**
+			        EspeakTTS.hablar("El resultado es " + resultadoFormateado);
 			        nuevoNumero = true;
-
-			        // Guardar operación en la base de datos
-			        HistorialBD.guardarOperacion(operando1Formateado + " " + operadorActual + " " + operando2Formateado, resultado);
-
 			    } catch (ArithmeticException ex) {
 			        campoResultado.setText("Error/Cero no, crack");
 			        campoOperador.setText("");
 			        nuevoNumero = true;
 			    }
 			    break;
+
+
 			    
 			case "C":
 				campoResultado.setText("");
@@ -146,7 +182,7 @@ public class PanelBotones extends JPanel {
 				break;
 			}
 		}
-	}
+	
 
 	private double calcularResultado(double op1, double op2) throws ArithmeticException {
 	    return switch (operadorActual) {
@@ -169,4 +205,4 @@ public class PanelBotones extends JPanel {
             return String.valueOf(numero);        
         }
     }
-}
+}}
