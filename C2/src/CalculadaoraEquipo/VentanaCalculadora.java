@@ -11,6 +11,8 @@ public class VentanaCalculadora extends JFrame {
     private PanelBotones panelBotones;
     private DefaultListModel<String> modeloHistorial = new DefaultListModel<>();
     private JList<String> listaHistorial = new JList<>(modeloHistorial);
+    
+    public static boolean audioActivado = true; // ✅ Controla el audio en botones y cálculos
 
     public enum Tema {
         CLARO, OSCURO, NEON
@@ -38,6 +40,15 @@ public class VentanaCalculadora extends JFrame {
         itemTemaOscuro.addActionListener(e -> cambiarTema(Tema.OSCURO));
         itemTemaNeon.addActionListener(e -> cambiarTema(Tema.NEON));
 
+        // ✅ Nueva opción de Audio Descriptivo
+        JCheckBoxMenuItem itemAudioDescriptivo = new JCheckBoxMenuItem("Audio Descriptivo");
+        itemAudioDescriptivo.setSelected(true);  // ✅ Activado por defecto
+        
+        itemAudioDescriptivo.addActionListener(e -> {
+            audioActivado = itemAudioDescriptivo.isSelected();  // ✅ Activar/desactivar solo el audio de botones y cálculos
+            System.out.println("🔊 Audio de botones/resultados: " + (audioActivado ? "Activado" : "Desactivado"));
+        });
+
         // Mostrar historial desde la base de datos
         itemHistorial.addActionListener(e -> {
             DefaultListModel<String> modeloDesdeBD = HistorialBD.obtenerHistorial();
@@ -52,21 +63,21 @@ public class VentanaCalculadora extends JFrame {
         menuOpciones.add(itemTemaOscuro);
         menuOpciones.add(itemTemaNeon);
         menuOpciones.add(itemHistorial);
+        menuOpciones.add(itemAudioDescriptivo); // ✅ Agregar la opción al menú
         menuOpciones.add(itemSalir);
 
         barraMenu.add(menuOpciones);
         setJMenuBar(barraMenu);
 
-        // **Añadir pronunciación de menú**
+        // **Mantener el audio en el menú siempre activo**
         MouseAdapter pronunciarOpciones = new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 JMenuItem item = (JMenuItem) e.getSource();
-                EspeakTTS.hablar(item.getText());  // ✅ Pronunciar opción del menú
+                EspeakTTS.hablar(item.getText());  // ✅ Siempre pronuncia el menú
             }
         };
         
-        // Añadir MouseListener para el menú principal
         menuOpciones.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -74,13 +85,13 @@ public class VentanaCalculadora extends JFrame {
             }
         });
 
-
-        // Aplicar pronunciación a cada opción del menú
         itemTemaClaro.addMouseListener(pronunciarOpciones);
         itemTemaOscuro.addMouseListener(pronunciarOpciones);
         itemTemaNeon.addMouseListener(pronunciarOpciones);
         itemHistorial.addMouseListener(pronunciarOpciones);
         itemSalir.addMouseListener(pronunciarOpciones);
+        itemAudioDescriptivo.addMouseListener(pronunciarOpciones);
+
 
         // Área de resultados
         campoOperador = new JTextField();
@@ -113,20 +124,6 @@ public class VentanaCalculadora extends JFrame {
         cambiarTema(Tema.CLARO);
         pack();
         setMinimumSize(new Dimension(400, 500));
-
-        // Movimiento de ventana sin bordes
-        Point mouseClickPoint = new Point();
-        addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent e) {
-                mouseClickPoint.setLocation(e.getPoint());
-            }
-        });
-        addMouseMotionListener(new MouseMotionAdapter() {
-            public void mouseDragged(MouseEvent e) {
-                Point currentScreenLocation = e.getLocationOnScreen();
-                setLocation(currentScreenLocation.x - mouseClickPoint.x, currentScreenLocation.y - mouseClickPoint.y);
-            }
-        });
     }
 
     private void cambiarTema(Tema tema) {
@@ -146,10 +143,10 @@ public class VentanaCalculadora extends JFrame {
                 bordes = Color.LIGHT_GRAY;
                 break;
             case NEON:
-                fondo = new Color(30, 30, 40); // Negro azulado
-                texto = new Color(180, 0, 255); // Morado neón
-                botones = new Color(30, 30, 40); // Mismo color del fondo, con borde marcado
-                bordes = new Color(100, 255, 255); // Borde neón fino
+                fondo = new Color(30, 30, 40); 
+                texto = new Color(180, 0, 255); 
+                botones = new Color(30, 30, 40);
+                bordes = new Color(100, 255, 255);
                 break;
             default:
                 fondo = Color.WHITE;

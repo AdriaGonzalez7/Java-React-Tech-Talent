@@ -43,28 +43,30 @@ public class PanelBotones extends JPanel {
 		        btn.addMouseListener(new MouseAdapter() {
 		            @Override
 		            public void mouseEntered(MouseEvent e) {
-		                final String textoBoton = btn.getText();  // Copia segura de `texto`
+		                if (VentanaCalculadora.audioActivado) {  // ✅ Solo pronunciar si el audio está activado
+		                    final String textoBoton = btn.getText();  // Copia segura de `texto`
 
-		                if (tareaActual != null && !tareaActual.isDone()) {
-		                    tareaActual.cancel(true);  // Cancela la pronunciación anterior si aún no ha ocurrido
+		                    if (tareaActual != null && !tareaActual.isDone()) {
+		                        tareaActual.cancel(true);  // Cancela la pronunciación anterior si aún no ha ocurrido
+		                    }
+
+		                    // Corregir signos matemáticos para pronunciación en español
+		                    String textoProcesado = textoBoton.replace("-", "menos")
+		                                                      .replace("÷", "dividido por")
+		                                                      .replace("×", "multiplicado por")
+		                                                      .replace("^", "elevado a")
+		                                                      .replace("√", "raíz cuadrada de")
+		                                                      .replace("←", "borrar último dígito")
+		                                                      .replace("=", "igual a")
+		                                                      .replace("C", "borrar todo")
+		                                                      .replace(".", "punto decimal");
+
+		                    // ✅ Programar la pronunciación con delay de 250ms solo si audio está activado
+		                    tareaActual = scheduler.schedule(() -> EspeakTTS.hablar(textoProcesado), 250, TimeUnit.MILLISECONDS);
 		                }
-
-		                // Corregir signos matemáticos para pronunciación en español
-		                String textoProcesado = textoBoton.replace("-", "menos")
-		                                                  .replace("÷", "dividido por")
-		                                                  .replace("×", "multiplicado por")
-		                                                  .replace("^", "elevado a")
-		                                                  .replace("√", "raíz cuadrada de")
-                        								  .replace("←", "borrar último dígito")
-                        								  .replace("=", "igual a")
-                        								  .replace("C", "borrar todo")
-						  								  .replace(".", "punto decimal");
-
-                        								                         
-		                // Programar la pronunciación con un pequeño retras0 
-		                tareaActual = scheduler.schedule(() -> EspeakTTS.hablar(textoProcesado), 250, TimeUnit.MILLISECONDS);
 		            }
 		        });
+
 
 
 
