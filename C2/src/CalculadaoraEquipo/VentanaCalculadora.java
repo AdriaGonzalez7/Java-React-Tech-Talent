@@ -6,6 +6,7 @@ import java.awt.event.*;
 
 public class VentanaCalculadora extends JFrame {
 
+    // ✅ Variables principales
     private JTextField campoOperador;
     private JTextField campoResultado;
     private PanelBotones panelBotones;
@@ -14,85 +15,31 @@ public class VentanaCalculadora extends JFrame {
     
     public static boolean audioActivado = true; // ✅ Controla el audio en botones y cálculos
 
+    // ✅ Enumeración para los temas de la calculadora
     public enum Tema {
         CLARO, OSCURO, NEON
     }
 
+    // ✅ Constructor - Inicializa la ventana y los componentes
     public VentanaCalculadora() {
+        configurarVentana();
+        inicializarInterfazGrafica();
+        configurarMenu();
+        configurarPronunciacionMenu();
+    }
+
+    // ✅ Configuración de la ventana principal
+    private void configurarVentana() {
         setUndecorated(true);
         setTitle("Calculadora");
         setSize(400, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
+    }
 
-        // Barra de menú
-        JMenuBar barraMenu = new JMenuBar();
-        JMenu menuOpciones = new JMenu("Opciones");
-
-        JMenuItem itemTemaClaro = new JMenuItem("Tema Claro");
-        JMenuItem itemTemaOscuro = new JMenuItem("Tema Oscuro");
-        JMenuItem itemTemaNeon = new JMenuItem("Tema Neón");
-        JMenuItem itemHistorial = new JMenuItem("Historial");
-        JMenuItem itemSalir = new JMenuItem("Salir");
-
-        itemTemaClaro.addActionListener(e -> cambiarTema(Tema.CLARO));
-        itemTemaOscuro.addActionListener(e -> cambiarTema(Tema.OSCURO));
-        itemTemaNeon.addActionListener(e -> cambiarTema(Tema.NEON));
-
-        // ✅ Nueva opción de Audio Descriptivo
-        JCheckBoxMenuItem itemAudioDescriptivo = new JCheckBoxMenuItem("Audio Descriptivo");
-        itemAudioDescriptivo.setSelected(true);  // ✅ Activado por defecto
-        
-        itemAudioDescriptivo.addActionListener(e -> {
-            audioActivado = itemAudioDescriptivo.isSelected();  // ✅ Activar/desactivar solo el audio de botones y cálculos
-            System.out.println("🔊 Audio de botones/resultados: " + (audioActivado ? "Activado" : "Desactivado"));
-        });
-
-        // Mostrar historial desde la base de datos
-        itemHistorial.addActionListener(e -> {
-            DefaultListModel<String> modeloDesdeBD = HistorialBD.obtenerHistorial();
-            listaHistorial.setModel(modeloDesdeBD);
-            JOptionPane.showMessageDialog(this, new JScrollPane(listaHistorial),
-                    "Historial de cálculos", JOptionPane.INFORMATION_MESSAGE);
-        });
-
-        itemSalir.addActionListener(e -> System.exit(0));
-
-        menuOpciones.add(itemTemaClaro);
-        menuOpciones.add(itemTemaOscuro);
-        menuOpciones.add(itemTemaNeon);
-        menuOpciones.add(itemHistorial);
-        menuOpciones.add(itemAudioDescriptivo); // ✅ Agregar la opción al menú
-        menuOpciones.add(itemSalir);
-
-        barraMenu.add(menuOpciones);
-        setJMenuBar(barraMenu);
-
-        // **Mantener el audio en el menú siempre activo**
-        MouseAdapter pronunciarOpciones = new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                JMenuItem item = (JMenuItem) e.getSource();
-                EspeakTTS.hablar(item.getText());  // ✅ Siempre pronuncia el menú
-            }
-        };
-        
-        menuOpciones.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                EspeakTTS.hablar("Opciones");  // ✅ Pronuncia el nombre del menú
-            }
-        });
-
-        itemTemaClaro.addMouseListener(pronunciarOpciones);
-        itemTemaOscuro.addMouseListener(pronunciarOpciones);
-        itemTemaNeon.addMouseListener(pronunciarOpciones);
-        itemHistorial.addMouseListener(pronunciarOpciones);
-        itemSalir.addMouseListener(pronunciarOpciones);
-        itemAudioDescriptivo.addMouseListener(pronunciarOpciones);
-
-
+    // ✅ Inicializar los componentes gráficos
+    private void inicializarInterfazGrafica() {
         // Área de resultados
         campoOperador = new JTextField();
         campoOperador.setEditable(false);
@@ -126,6 +73,85 @@ public class VentanaCalculadora extends JFrame {
         setMinimumSize(new Dimension(400, 500));
     }
 
+    // ✅ Configurar el menú y sus opciones
+    private void configurarMenu() {
+        JMenuBar barraMenu = new JMenuBar();
+        JMenu menuOpciones = new JMenu("Opciones");
+
+        JMenuItem itemTemaClaro = new JMenuItem("Tema Claro");
+        JMenuItem itemTemaOscuro = new JMenuItem("Tema Oscuro");
+        JMenuItem itemTemaNeon = new JMenuItem("Tema Neón");
+        JMenuItem itemHistorial = new JMenuItem("Historial");
+        JMenuItem itemSalir = new JMenuItem("Salir");
+
+        itemTemaClaro.addActionListener(e -> cambiarTema(Tema.CLARO));
+        itemTemaOscuro.addActionListener(e -> cambiarTema(Tema.OSCURO));
+        itemTemaNeon.addActionListener(e -> cambiarTema(Tema.NEON));
+
+        // ✅ Nueva opción de Audio Descriptivo
+        JCheckBoxMenuItem itemAudioDescriptivo = new JCheckBoxMenuItem("Audio Descriptivo");
+        itemAudioDescriptivo.setSelected(true);  // ✅ Activado por defecto
+        
+        itemAudioDescriptivo.addActionListener(e -> {
+            audioActivado = itemAudioDescriptivo.isSelected();  
+            System.out.println("🔊 Audio de botones/resultados: " + (audioActivado ? "Activado" : "Desactivado"));
+        });
+
+        // ✅ Pronunciación para la opción de audio
+        itemAudioDescriptivo.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                EspeakTTS.hablar("Audio Descriptivo, activado o desactivado");
+            }
+        });
+
+        // ✅ Mostrar historial desde la base de datos
+        itemHistorial.addActionListener(e -> {
+            DefaultListModel<String> modeloDesdeBD = HistorialBD.obtenerHistorial();
+            listaHistorial.setModel(modeloDesdeBD);
+            JOptionPane.showMessageDialog(this, new JScrollPane(listaHistorial),
+                    "Historial de cálculos", JOptionPane.INFORMATION_MESSAGE);
+        });
+
+        itemSalir.addActionListener(e -> System.exit(0));
+
+        menuOpciones.add(itemTemaClaro);
+        menuOpciones.add(itemTemaOscuro);
+        menuOpciones.add(itemTemaNeon);
+        menuOpciones.add(itemHistorial);
+        menuOpciones.add(itemAudioDescriptivo);
+        menuOpciones.add(itemSalir);
+
+        barraMenu.add(menuOpciones);
+        setJMenuBar(barraMenu);
+    }
+
+    // ✅ Configurar la pronunciación de opciones en el menú
+    private void configurarPronunciacionMenu() {
+        MouseAdapter pronunciarOpciones = new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                JMenuItem item = (JMenuItem) e.getSource();
+                EspeakTTS.hablar(item.getText());
+            }
+        };
+        
+        JMenu menuOpciones = getJMenuBar().getMenu(0);
+        menuOpciones.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                EspeakTTS.hablar("Opciones");
+            }
+        });
+
+        for (Component item : menuOpciones.getMenuComponents()) {
+            if (item instanceof JMenuItem) {
+                item.addMouseListener(pronunciarOpciones);
+            }
+        }
+    }
+
+    // ✅ Método para cambiar el tema de la calculadora
     private void cambiarTema(Tema tema) {
         Color fondo, texto, botones, bordes;
 
