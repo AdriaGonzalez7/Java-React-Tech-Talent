@@ -7,7 +7,7 @@ import java.awt.event.*;
 
 public class PanelBotones extends JPanel {
 
-    // ✅ Variables principales
+    // Variables principales
     private JTextField campoOperador;
     private JTextField campoResultado;
     private DefaultListModel<String> modeloHistorial;
@@ -19,7 +19,7 @@ public class PanelBotones extends JPanel {
     private ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
     private Future<?> tareaActual;
 
-    // ✅ Constructor - Inicializa la interfaz y los botones
+    // Constructor - Inicializa la interfaz y los botones
     public PanelBotones(JTextField campoOperador, JTextField campoResultado, DefaultListModel<String> modeloHistorial) {
         this.campoOperador = campoOperador;
         this.campoResultado = campoResultado;
@@ -29,12 +29,12 @@ public class PanelBotones extends JPanel {
         configurarBotones();
     }
 
-    // ✅ Configuración del panel y diseño
+    // Configuración del panel y diseño
     private void configurarInterfaz() {
         setLayout(new GridLayout(6, 4, 5, 5));
     }
 
-    // ✅ Configuración de los botones y su pronunciación
+    // Configuración de los botones y su pronunciación
     private void configurarBotones() {
         String[] etiquetas = { "√", "^", "←", "C", "7", "8", "9", "÷", "4", "5", "6", "×", "1", "2", "3", "-", ".", "0", "+", "=" };
 
@@ -46,7 +46,7 @@ public class PanelBotones extends JPanel {
                 btn.setFont(new Font("Arial", Font.BOLD, 20));
                 btn.addActionListener(new BotonListener());
 
-                // ✅ Pronunciar el botón solo si el audio está activado y añadir delay
+                // Pronunciar el botón solo si el audio está activado y añadir delay
                 btn.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseEntered(MouseEvent e) {
@@ -58,6 +58,7 @@ public class PanelBotones extends JPanel {
                             String textoProcesado = procesarTextoPronunciacion(btn.getText());
                             tareaActual = scheduler.schedule(() -> EspeakTTS.hablar(textoProcesado), 250, TimeUnit.MILLISECONDS);
                         }
+                 
                     }
                 });
 
@@ -70,7 +71,7 @@ public class PanelBotones extends JPanel {
         }
     }
 
-    // ✅ Procesar el texto de los botones para una pronunciación adecuada
+    // Procesar el texto de los botones para una pronunciación adecuada
     private String procesarTextoPronunciacion(String textoBoton) {
         return textoBoton.replace("-", "menos")
                          .replace("÷", "dividido por")
@@ -83,7 +84,7 @@ public class PanelBotones extends JPanel {
                          .replace(".", "punto decimal");
     }
 
-    // ✅ Método para cambiar el tema del panel de botones
+    // Método para cambiar el tema del panel de botones
     public void cambiarTema(Color fondo, Color texto, Color botones, Color bordes) {
         setBackground(fondo);
         for (Component c : getComponents()) {
@@ -96,7 +97,7 @@ public class PanelBotones extends JPanel {
         }
     }
 
-    // ✅ Clase interna que gestiona la lógica de los botones
+    // Clase interna que gestiona la lógica de los botones
     private class BotonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -117,7 +118,7 @@ public class PanelBotones extends JPanel {
         }
     }
 
-    // ✅ Manejo de operaciones matemáticas
+    // Manejo de operaciones matemáticas
     private void procesarOperacion(String texto) {
         switch (texto) {
             case "+": case "-": case "×": case "^": case "÷":
@@ -162,7 +163,7 @@ public class PanelBotones extends JPanel {
         }
     }
 
-    // ✅ Calcular resultado final
+    // Calcular resultado final
     private void calcularResultadoFinal() {
         try {
             if (campoResultado.getText().isEmpty() || campoResultado.getText().equals(".")) {
@@ -189,7 +190,7 @@ public class PanelBotones extends JPanel {
         }
     }
 
-    // ✅ Calcular raíz cuadrada
+    // Calcular raíz cuadrada
     private void calcularRaizCuadrada() {
         String val = campoResultado.getText();
         if (!val.isEmpty()) {
@@ -201,7 +202,7 @@ public class PanelBotones extends JPanel {
         }
     }
 
-    // ✅ Métodos auxiliares
+    // Métodos auxiliares
     private double calcularResultado(double op1, double op2) throws ArithmeticException {
         return switch (operadorActual) {
             case "+" -> op1 + op2;

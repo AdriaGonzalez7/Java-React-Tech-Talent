@@ -6,7 +6,7 @@ import java.awt.event.*;
 
 public class VentanaCalculadora extends JFrame {
 
-    // ✅ Variables principales
+    // Variables principales
     private JTextField campoOperador;
     private JTextField campoResultado;
     private PanelBotones panelBotones;
@@ -15,12 +15,12 @@ public class VentanaCalculadora extends JFrame {
     
     public static boolean audioActivado = true; // ✅ Controla el audio en botones y cálculos
 
-    // ✅ Enumeración para los temas de la calculadora
+    // Enumeración para los temas de la calculadora
     public enum Tema {
         CLARO, OSCURO, NEON
     }
 
-    // ✅ Constructor - Inicializa la ventana y los componentes
+    // Constructor - Inicializa la ventana y los componentes
     public VentanaCalculadora() {
         configurarVentana();
         inicializarInterfazGrafica();
@@ -28,7 +28,7 @@ public class VentanaCalculadora extends JFrame {
         configurarPronunciacionMenu();
     }
 
-    // ✅ Configuración de la ventana principal
+    // Configuración de la ventana principal
     private void configurarVentana() {
         setUndecorated(true);
         setTitle("Calculadora");
@@ -38,7 +38,7 @@ public class VentanaCalculadora extends JFrame {
         setLayout(new BorderLayout());
     }
 
-    // ✅ Inicializar los componentes gráficos
+    // Inicializar los componentes gráficos
     private void inicializarInterfazGrafica() {
         // Área de resultados
         campoOperador = new JTextField();
@@ -73,7 +73,7 @@ public class VentanaCalculadora extends JFrame {
         setMinimumSize(new Dimension(400, 500));
     }
 
-    // ✅ Configurar el menú y sus opciones
+    // Configurar el menú y sus opciones
     private void configurarMenu() {
         JMenuBar barraMenu = new JMenuBar();
         JMenu menuOpciones = new JMenu("Opciones");
@@ -88,16 +88,21 @@ public class VentanaCalculadora extends JFrame {
         itemTemaOscuro.addActionListener(e -> cambiarTema(Tema.OSCURO));
         itemTemaNeon.addActionListener(e -> cambiarTema(Tema.NEON));
 
-        // ✅ Nueva opción de Audio Descriptivo
+        // Nueva opción de Audio Descriptivo
         JCheckBoxMenuItem itemAudioDescriptivo = new JCheckBoxMenuItem("Audio Descriptivo");
         itemAudioDescriptivo.setSelected(true);  // ✅ Activado por defecto
         
         itemAudioDescriptivo.addActionListener(e -> {
-            audioActivado = itemAudioDescriptivo.isSelected();  
-            System.out.println("🔊 Audio de botones/resultados: " + (audioActivado ? "Activado" : "Desactivado"));
+            audioActivado = itemAudioDescriptivo.isSelected();
+            if (audioActivado) {
+                System.out.println("🔊 Audio de botones/resultados: Activado");
+            } else {
+                System.out.println("🔊 Audio de botones/resultados: Desactivado");
+            }
         });
 
-        // ✅ Pronunciación para la opción de audio
+
+        // Pronunciación para la opción de audio
         itemAudioDescriptivo.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -105,7 +110,7 @@ public class VentanaCalculadora extends JFrame {
             }
         });
 
-        // ✅ Mostrar historial desde la base de datos
+        // Mostrar historial desde la base de datos
         itemHistorial.addActionListener(e -> {
             DefaultListModel<String> modeloDesdeBD = HistorialBD.obtenerHistorial();
             listaHistorial.setModel(modeloDesdeBD);
@@ -126,7 +131,7 @@ public class VentanaCalculadora extends JFrame {
         setJMenuBar(barraMenu);
     }
 
-    // ✅ Configurar la pronunciación de opciones en el menú
+    // Configurar la pronunciación de opciones en el menú
     private void configurarPronunciacionMenu() {
         MouseAdapter pronunciarOpciones = new MouseAdapter() {
             @Override
@@ -151,7 +156,7 @@ public class VentanaCalculadora extends JFrame {
         }
     }
 
-    // ✅ Método para cambiar el tema de la calculadora
+    // Método para cambiar el tema de la calculadora
     private void cambiarTema(Tema tema) {
         Color fondo, texto, botones, bordes;
 
