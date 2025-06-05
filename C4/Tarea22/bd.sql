@@ -4,13 +4,14 @@ use bd_tarea22;
 
 create table clientes(
     id int primary key NOT NULL AUTO_INCREMENT,
-    nombre varchar(50) DEFAULT NULL,
-    apellido varchar(50) DEFAULT NULL,
-    direccion varchar(50) DEFAULT NULL,
-    dni varchar(9) DEFAULT NULL,
+    nombre varchar(250) DEFAULT NULL,
+    apellido varchar(250) DEFAULT NULL,
+    direccion varchar(250) DEFAULT NULL,
+    dni int(11) DEFAULT NULL,
     fecha date DEFAULT NULL,
     PRIMARY KEY (id)
 );
+
 
 create table videos (
     id int(11) NOT NULL AUTO_INCREMENT,
