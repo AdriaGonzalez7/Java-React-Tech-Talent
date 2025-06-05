@@ -6,3 +6,5 @@ jackie 5200
 jackie 4700
 montel 4700
 rixx 6300
+Adri 6400
+adri 7200
