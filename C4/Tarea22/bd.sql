@@ -3,7 +3,7 @@ create database bd_tarea22;
 use bd_tarea22;
 
 create table clientes(
-    id int primary key NOT NULL AUTO_INCREMENT,
+    id int NOT NULL AUTO_INCREMENT,
     nombre varchar(250) DEFAULT NULL,
     apellido varchar(250) DEFAULT NULL,
     direccion varchar(250) DEFAULT NULL,

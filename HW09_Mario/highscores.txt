@@ -8,3 +8,4 @@ montel 4700
 rixx 6300
 Adri 6400
 adri 7200
+adri 6600
