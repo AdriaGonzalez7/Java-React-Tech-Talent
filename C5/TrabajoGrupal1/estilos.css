@@ -1,0 +1,130 @@
+/* Estilo general */
+body {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background-color: #DCE1E3; /* Gris claro sofisticado */
+  color: #2D2D2D; /* Texto oscuro pero suave */
+}
+
+
+.logo-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.logo-container img {
+  width: 60px; /* Ajusta el tamaño del logo */
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.logo-container img:hover {
+  transform: scale(1.1); /* Efecto al pasar el mouse */
+}
+
+/* Barra de navegación */
+nav {
+  background-color: #30475E; /* Azul profundo */
+  padding: 12px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  margin: 0 15px;
+}
+
+nav ul li a {
+  color: #FDFDFD;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 18px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+nav ul li a:hover {
+  background-color: #F4D03F; /* Amarillo refinado */
+  color: #2D2D2D;
+}
+
+/* Encabezado */
+header {
+  text-align: center;
+  padding: 50px;
+  background: linear-gradient(135deg, #30475E, #DCE1E3); /* Azul con gris claro */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+header h1 {
+  font-size: 2.5rem;
+  color: #F4D03F; /* Amarillo con un toque más sofisticado */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Botón */
+.boton {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #1A72BE; /* Azul vibrante */
+  color: #FFFFFF;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.boton:hover {
+  background-color: #E74C3C; /* Rojo en hover */
+  color: #FFFFFF;
+}
+
+/* Sección equipo */
+.equipo {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 30px;
+}
+
+.miembro {
+  background: linear-gradient(145deg, #FDFDFD, #DCE1E3); /* Fondo claro */
+  padding: 20px;
+  border-radius: 8px;
+  width: 260px;
+  text-align: center;
+  color: #2D2D2D;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.miembro h3 {
+  color: #1A72BE; /* Azul vibrante */
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  background-color: #30475E;
+  color: #FDFDFD;
+  padding: 20px;
+}
+
+footer p a {
+  color: #F4D03F;
+  text-decoration: none;
+}
+
+footer p a:hover {
+  color: #E74C3C;
+}

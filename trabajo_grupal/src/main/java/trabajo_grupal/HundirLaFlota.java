@@ -3,7 +3,6 @@ package trabajo_grupal;
 import trabajo_grupal.model.Barco;
 import trabajo_grupal.model.Tablero;
 import trabajo_grupal.util.JugadoresDAO;
-import trabajo_grupal.util.LoginDAO;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,8 +10,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class HundirLaFlota {
-	
 	private JugadoresDAO jugadorDAO = new JugadoresDAO();
 
 	private JFrame frame;
@@ -22,48 +21,44 @@ public class HundirLaFlota {
 	private int tamañoTablero = 10;
 	private Tablero tablero1, tablero2;
 
-	public HundirLaFlota(String nombreJugador1, String nombreJugador2) {
-	    this.nombreJugador1 = nombreJugador1;
-	    this.nombreJugador2 = nombreJugador2;
+	public HundirLaFlota() {
+		frame = new JFrame("Hundir la Flota");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(1000, 700);
+		frame.setLayout(new BorderLayout());
+		frame.setResizable(true);
+		crearMenu();
+		mensajeEstado = new JLabel("¡Bienvenido a Hundir la Flota!", SwingConstants.CENTER);
+		mensajeEstado.setFont(new Font("Verdana", Font.BOLD, 18));
+		frame.add(mensajeEstado, BorderLayout.NORTH);
 
-	    frame = new JFrame("Trabajo Grupal - Hundir la Flota");
-	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    frame.setSize(800, 600);
-	    frame.setLayout(new BorderLayout());
-	    frame.setResizable(true);
+		tableroJugador1 = new JPanel(new GridLayout(tamañoTablero, tamañoTablero));
+		botonesJugador1 = new JButton[tamañoTablero][tamañoTablero];
+		inicializarTablero(botonesJugador1, tableroJugador1, "Jugador 1");
 
-	    crearMenu();
-	    mensajeEstado = new JLabel("Bienvenido " + nombreJugador1 + " y " + nombreJugador2 + ". ¡Coloca tus barcos!", SwingConstants.CENTER);
-	    mensajeEstado.setFont(new Font("Arial", Font.BOLD, 16));
-	    frame.add(mensajeEstado, BorderLayout.NORTH);
+		tableroJugador2 = new JPanel(new GridLayout(tamañoTablero, tamañoTablero));
+		botonesJugador2 = new JButton[tamañoTablero][tamañoTablero];
+		inicializarTablero(botonesJugador2, tableroJugador2, "Jugador 2");
 
-	    tablero1 = new Tablero();
-	    tablero2 = new Tablero();
+		tablero1 = new Tablero();
+		tablero2 = new Tablero();
 
-	    tableroJugador1 = new JPanel(new GridLayout(10, 10));
-	    tableroJugador2 = new JPanel(new GridLayout(10, 10));
+		JPanel panelTableros = new JPanel(new GridLayout(1, 2));
+		panelTableros.setBackground(new Color(0, 102, 204)); // Azul oscuro
 
-	    botonesJugador1 = new JButton[10][10];
-	    botonesJugador2 = new JButton[10][10];
+		panelTableros.add(tableroJugador1);
+		panelTableros.add(tableroJugador2);
+		frame.add(panelTableros, BorderLayout.CENTER);
 
-	    inicializarTablero(botonesJugador1, tableroJugador1, nombreJugador1);
-	    inicializarTablero(botonesJugador2, tableroJugador2, nombreJugador2);
+		frame.setVisible(true);
 
-	    // 🔹 Agregar los tableros a un panel contenedor
-	    JPanel panelTableros = new JPanel(new GridLayout(1, 2));
-	    panelTableros.add(tableroJugador1);
-	    panelTableros.add(tableroJugador2);
-	    frame.add(panelTableros, BorderLayout.CENTER);
+		// Llamar a iniciarJuego para solicitar los nombres antes de colocar los barcos
+		iniciarJuego();
 
-	    // 🔹 Ahora sí mostrar la ventana después de la inicialización completa
-	    SwingUtilities.invokeLater(() -> {
-	        frame.setVisible(true);
-	        iniciarJuego();
-	    });
+		// Permitir la colocación de barcos
+		colocarBarcosInicial(botonesJugador1, tablero1);
+		colocarBarcosInicial(botonesJugador2, tablero2);
 	}
-
-
-
 
 	private void crearMenu() {
 		JMenuBar menuBar = new JMenuBar();
@@ -94,49 +89,82 @@ public class HundirLaFlota {
 	private String nombreJugador1;
 	private String nombreJugador2;
 
+	private String[] solicitarNombreYContraseña(String jugador) {
+		JPanel panel = new JPanel(new GridBagLayout());
+		panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(30, 144, 255), 2),
+				"Inicio de sesión - " + jugador, 0, 0, new Font("Verdana", Font.BOLD, 14), new Color(30, 144, 255)));
+
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets(10, 10, 10, 10);
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+
+		JLabel labelNombre = new JLabel("Nombre:");
+		labelNombre.setFont(new Font("Verdana", Font.PLAIN, 12));
+		labelNombre.setForeground(new Color(30, 144, 255));
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		panel.add(labelNombre, gbc);
+
+		JTextField campoNombre = new JTextField(15);
+		campoNombre.setFont(new Font("Verdana", Font.PLAIN, 12));
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		panel.add(campoNombre, gbc);
+
+		JLabel labelContraseña = new JLabel("Contraseña:");
+		labelContraseña.setFont(new Font("Verdana", Font.PLAIN, 12));
+		labelContraseña.setForeground(new Color(30, 144, 255));
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		panel.add(labelContraseña, gbc);
+
+		JPasswordField campoContraseña = new JPasswordField(15);
+		campoContraseña.setFont(new Font("Verdana", Font.PLAIN, 12));
+		gbc.gridx = 1;
+		gbc.gridy = 1;
+		panel.add(campoContraseña, gbc);
+
+		int opcion = JOptionPane.showConfirmDialog(frame, panel, "Introduce los datos del " + jugador,
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+		if (opcion == JOptionPane.OK_OPTION) {
+			String nombre = campoNombre.getText().trim();
+			String contraseña = new String(campoContraseña.getPassword()).trim();
+			if (nombre.isEmpty()) {
+				nombre = jugador; // Nombre por defecto si está vacío
+			}
+			return new String[] { nombre, contraseña };
+		} else {
+			frame.dispose();
+			System.exit(0);
+			return null;
+		}
+	}
+
 	private void iniciarJuego() {
-		if (nombreJugador1 != null && nombreJugador2 != null) {
-			// Actualizar los bordes de los paneles con los nombres existentes
-			tableroJugador1.setBorder(BorderFactory.createTitledBorder(nombreJugador1));
-			tableroJugador2.setBorder(BorderFactory.createTitledBorder(nombreJugador2));
+		while (true) {
+			try {
+				// Solicitar datos del Jugador 1
+				String[] datosJugador1 = solicitarNombreYContraseña("Jugador 1");
+				jugadorDAO.insertarJugador(datosJugador1[0], datosJugador1[1]);
+
+				// Solicitar datos del Jugador 2
+				String[] datosJugador2 = solicitarNombreYContraseña("Jugador 2");
+				jugadorDAO.insertarJugador(datosJugador2[0], datosJugador2[1]);
+
+				// Asignar nombres y actualizar bordes
+				nombreJugador1 = datosJugador1[0];
+				nombreJugador2 = datosJugador2[0];
+				tableroJugador1.setBorder(BorderFactory.createTitledBorder(nombreJugador1));
+				tableroJugador2.setBorder(BorderFactory.createTitledBorder(nombreJugador2));
+
+				break; // Salir del bucle si todo es correcto
+			} catch (IllegalArgumentException e) {
+				JOptionPane.showMessageDialog(frame, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 
-		 ocultarBarcos(botonesJugador1, tablero1);
-		    ocultarBarcos(botonesJugador2, tablero2);
-
-		    habilitarTablero(botonesJugador2, true); // Solo habilitar el tablero del jugador 2
-		    habilitarTablero(botonesJugador1, false);
-		    
-
-		// Actualizar los bordes de los paneles con los nombres de los jugadores
-		tableroJugador1.setBorder(BorderFactory.createTitledBorder(nombreJugador1));
-		tableroJugador2.setBorder(BorderFactory.createTitledBorder(nombreJugador2));
-
-		// Ocultar los barcos de ambos jugadores
-		ocultarBarcos(botonesJugador1, tablero1);
-		ocultarBarcos(botonesJugador2, tablero2);
-
-		habilitarTablero(botonesJugador2, true); // Solo habilitar el tablero del jugador 2
-		habilitarTablero(botonesJugador1, false);
-
-		// Asignar ActionListener al tablero del jugador 2
-		 for (int i = 0; i < tamañoTablero; i++) {
-		        for (int j = 0; j < tamañoTablero; j++) {
-		            final int fila = i;
-		            final int columna = j;
-		            botonesJugador2[i][j].addActionListener(
-		                e -> manejarDisparo(botonesJugador2[fila][columna], fila, columna, tablero2, botonesJugador2)
-		            );
-		            botonesJugador1[i][j].addActionListener(
-		                e -> manejarDisparo(botonesJugador1[fila][columna], fila, columna, tablero1, botonesJugador1)
-		            );
-		        }
-		    }
-
-		// Asignar ActionListener al tablero del jugador 1
-	
-		JugadoresDAO.insertarJugador(nombreJugador1);
-		JugadoresDAO.insertarJugador(nombreJugador2);
+		mensajeEstado.setText("Turno de " + nombreJugador1 + ". Selecciona una casilla en el tablero del oponente.");
 
 		mensajeEstado.setText("Turno de " + nombreJugador1 + ". Selecciona una casilla en el tablero del oponente.");
 	}
@@ -438,17 +466,6 @@ public class HundirLaFlota {
 	}
 
 	public static void main(String[] args) {
-	    String[] jugadores = LoginDAO.mostrarLogin();
-
-	    if (jugadores != null && jugadores[0] != null && jugadores[1] != null) {  
-	        SwingUtilities.invokeLater(() -> new HundirLaFlota(jugadores[0], jugadores[1]));  // 🔹 Llamar con SwingUtilities
-	    } else {
-	        System.out.println("Login fallido o cancelado. Cerrando la aplicación.");
-	        System.exit(0);
-	    }
+		new HundirLaFlota();
 	}
-
-
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
 }
