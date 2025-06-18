@@ -8,18 +8,19 @@ body {
   color: #2D2D2D; /* Texto oscuro pero suave */
 }
 
-
 .logo-container {
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 8px;
+  left: 15px;
+  z-index: 10;
 }
 
 .logo-container img {
-  width: 60px; /* Ajusta el tamaño del logo */
+  width: 45px; /* Logo más pequeño */
   height: auto;
   cursor: pointer;
   transition: transform 0.3s ease;
+  border-radius: 5px;
 }
 
 .logo-container img:hover {
@@ -29,7 +30,8 @@ body {
 /* Barra de navegación */
 nav {
   background-color: #30475E; /* Azul profundo */
-  padding: 12px;
+  padding: 15px 15px 15px 80px; /* Más padding izquierdo para el logo */
+  position: relative;
 }
 
 nav ul {
@@ -38,6 +40,7 @@ nav ul {
   justify-content: center;
   margin: 0;
   padding: 0;
+  align-items: center;
 }
 
 nav ul li {
@@ -48,9 +51,10 @@ nav ul li a {
   color: #FDFDFD;
   text-decoration: none;
   font-weight: bold;
-  padding: 10px 18px;
-  border-radius: 4px;
+  padding: 12px 20px; /* Padding aumentado */
+  border-radius: 6px;
   transition: background-color 0.3s ease;
+  font-size: 16px; /* Tamaño de fuente más grande */
 }
 
 nav ul li a:hover {

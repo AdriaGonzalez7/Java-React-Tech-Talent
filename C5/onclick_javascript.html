@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            text-align: center;
+            margin: 20px;
+        }
+        
+        #imagen {
+            width: 300px;  /* Ancho fijo más grande */
+            height: 300px; /* Alto fijo */
+            object-fit: cover; /* Mantiene proporción sin distorsionar */
+            border: 3px solid #333;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        button {
+            margin: 0 10px;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+            transform: scale(1.1);
+        }
+        
+        .titulo-animado {
+            animation-duration: 2s;
+            animation-delay: 0.5s;
+        }
+        
+        .boton-animado {
+            animation-duration: 1s;
+            animation-delay: 1s;
+        }
+        
+        .boton-animado:nth-child(2) {
+            animation-delay: 1.2s;
+        }
+        
+        .boton-animado:nth-child(3) {
+            animation-delay: 1.4s;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="titulo" class="animate__animated animate__fadeIn titulo-animado">Onclick Javascript Cambiar Imagen</h1>
+    <h2 id="texto_oculto" class="animate__animated animate__fadeIn titulo-animado" >Texto Oculto</h2>
+    <button class="animate__animated animate__fadeInUp boton-animado" onclick="cambiarImagen1()">Imagen Patata</button>
+    <button class="animate__animated animate__fadeInUp boton-animado" onclick="cambiarImagen2()">Imagen Mono</button>
+    <button class="animate__animated animate__fadeInUp boton-animado" onclick="cambiarImagen3()">Imagen Bosque</button>
+    <button class="animate__animated animate__fadeInUp boton-animado" onclick="cambiarTexto()">Cambiar Tamaño Texto</button>
+    <button class="animate__animated animate__fadeInUp boton-animado" onclick="cambiarTexto2()">Tamaño original</button>
+    <button class="animate__animated animate__fadeInUp boton-animado" onclick="OcultarTexto()">Ocultar Texto</button>
+
+<br>
+    <img src="img/1.jpg" alt="Imagen 1" id="imagen">
+    
+    <script>
+        function cambiarImagen1() {
+            document.getElementById('imagen').src = 'img/2.jpg';
+        }
+        
+        function cambiarImagen2() {
+            document.getElementById('imagen').src = 'img/3.jpg';
+        }
+        
+        function cambiarImagen3() {
+            document.getElementById('imagen').src = 'img/1.jpg';
+        }
+
+        function cambiarTexto() {
+            document.getElementById('titulo').style.fontSize = '48px';
+        }
+
+        function cambiarTexto2() {
+            document.getElementById('titulo').style.fontSize = '32px';
+        }
+        
+        function OcultarTexto() {
+            document.getElementById('texto_oculto').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
