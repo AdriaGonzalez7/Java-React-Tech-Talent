@@ -2,117 +2,137 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>MasterMind</title>
-  <link rel="stylesheet" href="css/estilos.css">
+  <title>MasterMind - Ivette, Dani, Adri</title>
+ <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
 
-  <nav>
+  <!-- Menú de navegación -->
+   <nav>
+    <div class="logo-container">
+      <a href="index.html">
+        <img src="logo.png" alt="Logo MasterMind">
+      </a>
+    </div>
     <ul>
       <li><a href="index.html">Home</a></li>
       <li><a href="juego.html">Juego</a></li>
-      <li><a href="proyectos.html">Proyectos</a></li>
       <li><a href="about.html">Sobre Nosotros</a></li>
+      <li><a href="merchandising.html">Merchandising</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+
     </ul>
   </nav>
 
+  <!-- Encabezado -->
   <header>
     <h1>MasterMind</h1>
-    <p>Jugador: <strong>Jugador1</strong> | ⏱ Tiempo: <span id="tiempo">00:00</span></p>
+    <p>Jugador: <strong>Jugador1</strong> | ⏱ Tiempo: 00:00</p>
   </header>
 
-  <section class="tablero-container">
-    <div class="tablero">
-      <!-- 10 filas de intentos -->
-      <!-- Cada fila tiene 4 espacios -->
-      <!-- Solo diseño, sin lógica -->
-      <div class="fila">
-        <div class="slot"></div>
-        <div class="slot"></div>
-        <div class="slot"></div>
-        <div class="slot"></div>
-      </div>
-       <div class="fila">
-        <div class="slot"></div>
-        <div class="slot"></div>
-        <div class="slot"></div>
-        <div class="slot"></div>
-      </div>
-       <div class="fila">
-        <div class="slot"></div>
-        <div class="slot"></div>
-        <div class="slot"></div>
-        <div class="slot"></div>
-      </div>
-       <div class="fila">
-        <div class="slot"></div>
-        <div class="slot"></div>
-        <div class="slot"></div>
-        <div class="slot"></div>
-      </div>
-       <div class="fila">
-        <div class="slot"></div>
-        <div class="slot"></div>
-        <div class="slot"></div>
-        <div class="slot"></div>
-      </div>
-       <div class="fila">
-        <div class="slot"></div>
-        <div class="slot"></div>
-        <div class="slot"></div>
-        <div class="slot"></div>
-      </div>
-       <div class="fila">
-        <div class="slot"></div>
-        <div class="slot"></div>
-        <div class="slot"></div>
-        <div class="slot"></div>
-      </div>
-       <div class="fila">
-        <div class="slot"></div>
-        <div class="slot"></div>
-        <div class="slot"></div>
-        <div class="slot"></div>
-      </div>
-       <div class="fila">
-        <div class="slot"></div>
-        <div class="slot"></div>
-        <div class="slot"></div>
-        <div class="slot"></div>
-      </div>
-       <div class="fila">
-        <div class="slot"></div>
-        <div class="slot"></div>
-        <div class="slot"></div>
-        <div class="slot"></div>
-      </div>
-      <!-- Repite la fila 10 veces -->
-      <!-- Puedes copiar y pegar o usar un generador -->
-      <!-- ... -->
+  <!-- Tablero -->
+  <div class="tablero-container">
 
-      <!-- Aquí puedes poner más filas según necesites -->
+    <!-- Fila activa 1 -->
+    <div class="fila activa">
+      <div class="slots">
+        <div class="slot azul"></div>
+        <div class="slot rojo"></div>
+        <div class="slot verde"></div>
+        <div class="slot amarillo"></div>
+      </div>
+      <div class="feedback">
+        <div class="pista acierto"></div>
+        <div class="pista medio"></div>
+        <div class="pista vacio"></div>
+        <div class="pista vacio"></div>
+      </div>
     </div>
 
-    <div class="feedback">
-      <div class="pista"></div>
-      <div class="pista"></div>
-      <div class="pista"></div>
-      <div class="pista"></div>
+    <!-- Fila activa 2 -->
+    <div class="fila activa">
+      <div class="slots">
+        <div class="slot amarillo"></div>
+        <div class="slot rojo"></div>
+        <div class="slot verde"></div>
+        <div class="slot azul"></div>
+      </div>
+      <div class="feedback">
+        <div class="pista medio"></div>
+        <div class="pista acierto"></div>
+        <div class="pista vacio"></div>
+        <div class="pista vacio"></div>
+      </div>
     </div>
-     <div class="feedback">
-      <div class="pista"></div>
-      <div class="pista"></div>
-      <div class="pista"></div>
-      <div class="pista"></div>
-    </div>
-  </section>
 
+    <!-- Fila activa 3 -->
+    <div class="fila activa">
+      <div class="slots">
+        <div class="slot rojo"></div>
+        <div class="slot rojo"></div>
+        <div class="slot verde"></div>
+        <div class="slot azul"></div>
+      </div>
+      <div class="feedback">
+        <div class="pista acierto"></div>
+        <div class="pista acierto"></div>
+        <div class="pista vacio"></div>
+        <div class="pista vacio"></div>
+      </div>
+    </div>
+
+    <!-- Fila activa 4 -->
+    <div class="fila activa">
+      <div class="slots">
+        <div class="slot amarillo"></div>
+        <div class="slot verde"></div>
+        <div class="slot azul"></div>
+        <div class="slot rojo"></div>
+      </div>
+      <div class="feedback">
+        <div class="pista acierto"></div>
+        <div class="pista medio"></div>
+        <div class="pista vacio"></div>
+        <div class="pista vacio"></div>
+      </div>
+    </div>
+
+    <!-- Fila activa 5 -->
+    <div class="fila activa">
+      <div class="slots">
+        <div class="slot azul"></div>
+        <div class="slot azul"></div>
+        <div class="slot rojo"></div>
+        <div class="slot rojo"></div>
+      </div>
+      <div class="feedback">
+        <div class="pista medio"></div>
+        <div class="pista vacio"></div>
+        <div class="pista vacio"></div>
+        <div class="pista vacio"></div>
+      </div>
+    </div>
+
+    <!-- Filas vacías -->
+    <div class="fila"><div class="slots"><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div></div><div class="feedback"><div class="pista"></div><div class="pista"></div><div class="pista"></div><div class="pista"></div></div></div>
+    <div class="fila"><div class="slots"><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div></div><div class="feedback"><div class="pista"></div><div class="pista"></div><div class="pista"></div><div class="pista"></div></div></div>
+    <div class="fila"><div class="slots"><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div></div><div class="feedback"><div class="pista"></div><div class="pista"></div><div class="pista"></div><div class="pista"></div></div></div>
+    <div class="fila"><div class="slots"><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div></div><div class="feedback"><div class="pista"></div><div class="pista"></div><div class="pista"></div><div class="pista"></div></div></div>
+    <div class="fila"><div class="slots"><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div></div><div class="feedback"><div class="pista"></div><div class="pista"></div><div class="pista"></div><div class="pista"></div></div></div>
+
+  </div>
+
+  <!-- Colores disponibles -->
   <section class="colores">
-    <button class="color azul">Azul</button>
-    <button class="color rojo">Rojo</button>
-    <button class="color verde">Verde</button>
-    <button class="color amarillo">Amarillo</button>
+    <button class="color azul"></button>
+    <button class="color rojo"></button>
+    <button class="color verde"></button>
+    <button class="color amarillo"></button>
   </section>
 
+</body>
+<footer>
+  <p>&copy; 2025 MasterMind - Todos los derechos reservados.</p>
+</footer>
 </body>
 </html>
