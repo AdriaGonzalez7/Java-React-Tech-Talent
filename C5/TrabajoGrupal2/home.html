@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html leng="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" , initial-scale="1.0" />
+    <title>Tienda</title>
+    <link rel="stylesheet" href="CSS/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Bienvenidos</h1>
+      <nav>
+        <a href="Home.html">Home</a>
+        <a href="About.html">Sobre</a>
+        <a href="Contacto.html">Contact</a>
+        <a href="Producto.html">Products</a>
+        <a href="Merch.html">Merch</a>
+      </nav>
+    </header>
+    <main>
+      <div>
+        <h2>Esta es la pagina de inicio</h2>
+      </div>
+    </main>
+  </body>
+  <footer></footer>
+  <script>
+    function mostrarSubmenu(elemento) {
+      const submenu = elemento.nextElementSibling;
+      if (submenu) {
+        submenu.style.display = "block";
+      }
+    }
+    function ocultarSubmenu(elemento) {
+      const submenu = elemento.nextElementSibling;
+      if (submenu) {
+        submenu.style.display = "none";
+      }
+    }
+  </script>
+</html>
