@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html leng="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" , initial-scale="1.0" />
+    <title>Productos</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+        <nav>
+          <ul class="menu">
+            <li class="menu-item" onmouseover="showSubmenu(this)" onmouseout="hideSubmenu(this)">
+              <a href="Home.html">Sobre</a>
+              <ul class="submenu">
+                <li><a href="about.html" target="_self">Sobre Nosotros</a></li>
+                <li><a href="Procesos.html" target="_self">Procesos</a></li>
+              </ul>
+            </li>
+            <li><a href="Home.html">Inicio</a></li>
+            <li><a href="Contacto.html">Contacto</a></li>
+            <li><a href="Producto.html">Productos</a></li>
+            <li><a href="Merch.html">Merch</a></li>
+          </ul>
+        </nav>
+      </header>
+      <main>
+        <div>
+          <h2>Esta es la pagina de inicio</h2>
+        </div>
+      </main>
+  </body>
+  <footer>
+    <p>&copy; 2025 Lorem ipsum - Todos los derechos reservados.</p>
+  </footer>
+  <script>
+    function mostrarSubmenu(elemento) {
+      const submenu = elemento.nextElementSibling;
+      if (submenu) {
+        submenu.style.display = "block";
+      }
+    }
+    function ocultarSubmenu(elemento) {
+      const submenu = elemento.nextElementSibling;
+      if (submenu) {
+        submenu.style.display = "none";
+      }
+    }
+  </script>
+</html>
