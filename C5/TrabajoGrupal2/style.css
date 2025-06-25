@@ -195,4 +195,69 @@
   .formulario-contacto button:hover {
     background-color: #0a64b0;
   }
+    /* ========== REDES SOCIALES ========== */
+
+  .redes-sociales {
+    text-align: center;
+    padding: 2em;
+    background-color: #fef2f2;
+  }
+  
+  .redes-sociales h2 {
+    font-size: 1.8em;
+    margin-bottom: 0.5em;
+  }
+  
+  .iconos-redes a img {
+    width: 40px;
+    margin: 0 10px;
+    transition: transform 0.2s ease;
+  }
+  
+  .iconos-redes a:hover img {
+    transform: scale(1.2);
+  }
+  
+    /* ========== RESEÑAS ========== */
+
+    .testimonios {
+        background-color: #fff8f0;
+        padding: 2em;
+        text-align: center;
+        font-family: 'Segoe UI', sans-serif;
+      }
+      
+      .testimonios h2 {
+        font-size: 2em;
+        color: #d84315;
+        margin-bottom: 1em;
+      }
+      
+      .reseñas blockquote {
+        background: #fff;
+        border-left: 5px solid #ff7043;
+        margin: 1em auto;
+        padding: 1em 1.5em;
+        max-width: 600px;
+        font-style: italic;
+        color: #333;
+        position: relative;
+      }
+      
+      .reseñas blockquote::before {
+        content: "“";
+        font-size: 3em;
+        color: #ff7043;
+        position: absolute;
+        left: 10px;
+        top: 5px;
+      }
+      
+      .reseñas footer {
+        margin-top: 0.5em;
+        font-size: 0.9em;
+        color: #777;
+      }
+      
+
   
