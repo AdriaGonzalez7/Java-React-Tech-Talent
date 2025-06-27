@@ -156,7 +156,7 @@
   }
   /* ========== FORMULARIO ========== */
 
-  .formulario-contacto {
+  #formulario-contacto {
     max-width: 500px;
     margin: 0 auto;
     text-align: left;
@@ -166,13 +166,13 @@
     padding: 20px;
   }
   
-  .formulario-contacto label {
+  #formulario-contacto label {
     font-weight: bold;
     color: #193a59;
   }
   
-  .formulario-contacto input,
-  .formulario-contacto textarea {
+  #formulario-contacto input,
+  #formulario-contacto textarea {
     width: 100%;
     padding: 10px;
     border: 1px solid #cbd6e2;
@@ -181,7 +181,7 @@
     font-size: 1rem;
   }
   
-  .formulario-contacto button {
+  #formulario-contacto button {
     background-color: #0d86f0;
     color: white;
     padding: 10px 20px;
@@ -192,7 +192,7 @@
     transition: background-color 0.3s;
   }
   
-  .formulario-contacto button:hover {
+  #formulario-contacto button:hover {
     background-color: #0a64b0;
   }
     /* ========== REDES SOCIALES ========== */
@@ -258,6 +258,42 @@
         font-size: 0.9em;
         color: #777;
       }
-      
+
+/* ========== GOOGLE MAPS ========== */
+
+.ubicacion {
+ text-align: center;
+ padding: 2em;
+ background-color: #f4f4f4;
+}
+
+.ubicacion h2 {
+  color: #d84315;
+  margin-bottom: 0.5em;
+}
+
+.mapa iframe {
+  border-radius: 8px;
+  max-width: 800px;
+  width: 100%;
+}
+
+/* ========== BOTONES ========== */
+     
+.btn-principal {
+  display: inline-block;
+  background-color: var(--principal);
+  color: #434c9c;
+  padding: 0.8em 1.5em;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.btn-principal:hover {
+  background-color: #ff5722;
+}
 
   
