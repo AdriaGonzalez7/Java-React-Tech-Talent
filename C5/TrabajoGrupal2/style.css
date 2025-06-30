@@ -109,6 +109,13 @@
     justify-content: center;
     gap: 30px;
     padding: 40px 20px;
+  }.equipo img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
   }
   
   .miembro {
@@ -672,3 +679,5 @@ p.sub{
 .pago-exito button:hover {
   background-color: #d43812;
 }
+
+ 

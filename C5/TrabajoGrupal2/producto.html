@@ -230,7 +230,7 @@
     <p>&copy; 2025 Derechos reservados</p>
   </footer>
   <script src="../JS/submenu.js"></script>
-  <script src="../JS/aplicarPersonalizacion.js"></script>
+  <script src="/aplicarPersonalizacion.js"></script>
   <script>
 function fetchCarrito() {
     fetch("obtener_carrito.php")
@@ -291,6 +291,25 @@ function fetchCarrito() {
         : "normal";
     }
 
+    function aplicarPersonalizacion() {
+  const texto = document.getElementById("inputTexto").value || "Tu texto aquí";
+  const color = document.getElementById("inputColor").value;
+  const fuente = document.getElementById("fuente").value;
+  const estilo = document.getElementById("estilo").value;
+  const tamanio = document.getElementById("tamanioFuente").value;
+
+  const objetivo = document.getElementById("textoPersonalizado");
+  objetivo.innerText = texto;
+  objetivo.style.color = color;
+  objetivo.style.fontFamily = fuente;
+  objetivo.style.fontSize = `${tamanio}px`;
+  document.getElementById("previewTamanio").textContent = `${tamanio}px`;
+
+  objetivo.style.fontStyle = estilo.includes("italic") ? "italic" : "normal";
+  objetivo.style.fontWeight = estilo.includes("bold") ? "bold" : "normal";
+}
+
+
     let contadorBloques = 1;
 
     function insertarTextoEditable() {
@@ -328,34 +347,40 @@ function fetchCarrito() {
       alert("¡Producto añadido al carrito!");
     }
 
-    const textoPersonalizado = document.getElementById("textoDiseñado");
-    let arrastrando = false;
+    ["textoDiseñado", "textoPersonalizado"].forEach((id) => {
+  const texto = document.getElementById(id);
+  if (!texto) return;
 
-    textoPersonalizado?.addEventListener("mousedown", (e) => {
-      arrastrando = true;
-      const rect = textoPersonalizado.getBoundingClientRect();
-      offsetX = e.clientX - rect.left;
-      offsetY = e.clientY - rect.top;
-      textoPersonalizado.style.cursor = "grabbing";
-    });
+  let arrastrando = false;
+  let offsetX = 0;
+  let offsetY = 0;
 
-    document.addEventListener("mousemove", (e) => {
-      if (arrastrando) {
-        const cont = document.querySelector(".preview-producto");
-        const contRect = cont.getBoundingClientRect();
-        textoPersonalizado.style.left = `${
-          e.clientX - contRect.left - offsetX
-        }px`;
-        textoPersonalizado.style.top = `${
-          e.clientY - contRect.top - offsetY
-        }px`;
-      }
-    });
+  texto.style.position = "absolute";
 
-    document.addEventListener("mouseup", () => {
-      arrastrando = false;
-      textoPersonalizado.style.cursor = "grab";
-    });
+  texto.addEventListener("mousedown", (e) => {
+    arrastrando = true;
+    const rect = texto.getBoundingClientRect();
+    offsetX = e.clientX - rect.left;
+    offsetY = e.clientY - rect.top;
+    texto.style.cursor = "grabbing";
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (arrastrando) {
+      const cont = texto.closest(".producto-preview, .preview-producto");
+      if (!cont) return;
+      const contRect = cont.getBoundingClientRect();
+      texto.style.left = `${e.clientX - contRect.left - offsetX}px`;
+      texto.style.top = `${e.clientY - contRect.top - offsetY}px`;
+    }
+  });
+
+  document.addEventListener("mouseup", () => {
+    arrastrando = false;
+    texto.style.cursor = "grab";
+  });
+});
+
 
     function hacerElementoArrastrable(el) {
       let activo = false,
