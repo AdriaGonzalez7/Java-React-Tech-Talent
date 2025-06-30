@@ -14,21 +14,11 @@
     <header>
       <nav>
         <ul class="menu">
-          <li
-            class="menu-item"
-            onmouseover="showSubmenu(this)"
-            onmouseout="hideSubmenu(this)"
-          >
-            <a href="Home.html">Inicio</a>
-            <ul class="submenu">
-              <li><a href="about.html" target="_self">Sobre Nosotros</a></li>
-              <li><a href="Procesos.html" target="_self">Procesos</a></li>
-            </ul>
-          </li>
-          <li><a href="#">Sobre</a></li>
-          <li><a href="Contacto.html">Contacto</a></li>
+          <li><a href="Home.html">Inicio</a></li>
+          <li><a href="about.html">Sobre Nosotros</a></li>
           <li><a href="Producto.html">Productos</a></li>
-          <li><a href="Carrito.html">Carrito</a></li>
+          <li><a href="Contacto.html">Contacto</a></li>
+
         </ul>
       </nav>
     </header>
@@ -105,7 +95,7 @@
 
         <div class="btn">
         <button onclick="aplicarPersonalizacion()">Aplicar</button>
-        <button onclick="añadirAlCarrito()">Añadir al carrito</button>
+        <button onclick="agregarTazaAlCarrito()">Añadir al carrito</button>
         </div>
       </section>
       <section>
@@ -181,7 +171,7 @@
 
       <div class="btn">
         <button onclick="inicializarPersonalizacion()">Aplicar</button>
-        <button onclick="guardarEnCarrito()">Añadir al carrito</button>
+        <button onclick="agregarAlCarrito()">Añadir al carrito</button>
       </div>
       <!-- </div> -->
       </section>
@@ -199,13 +189,71 @@
           <br>
         </div>
       </section>
+      <section class="vista-carrito">
+        <h2>🛒 Vista previa del carrito</h2>
+        <ul id="lista-carrito-preview"></ul>
+        <p id="total-preview">Total: 0 €</p>
+      
+        <div class="botones-carrito">
+          <a href="carrito.php"><button>Ver carrito completo</button></a>
+          <button onclick="borrarCarrito()">Borrar carrito</button>
+        </div>
+      </section>
+      <br><br>
     </main>
+    <script>
+      function fetchCarrito() {
+        fetch("obtener_carrito.php")
+          .then(res => res.json())
+          .then(productos => {
+            const lista = document.getElementById("lista-carrito-preview");
+            const totalElem = document.getElementById("total-preview");
+            lista.innerHTML = "";
+            let total = 0;
+    
+            productos.forEach(p => {
+              const li = document.createElement("li");
+              li.textContent = `${p.nombre} - ${parseFloat(p.precio).toFixed(2)} €`;
+              lista.appendChild(li);
+              total += parseFloat(p.precio);
+            });
+    
+            totalElem.textContent = `Total: ${total.toFixed(2)} €`;
+          })
+          .catch(error => console.error("Error al obtener el carrito:", error));
+      }
+    
+      document.addEventListener("DOMContentLoaded", fetchCarrito);
+    </script>
   </body>
   <footer>
     <p>&copy; 2025 Derechos reservados</p>
   </footer>
   <script src="../JS/submenu.js"></script>
   <script src="../JS/aplicarPersonalizacion.js"></script>
+  <script>
+function fetchCarrito() {
+    fetch("obtener_carrito.php")
+      .then(res => res.json())
+      .then(productos => {
+        const lista = document.getElementById("lista-carrito-preview");
+        const totalElem = document.getElementById("total-preview");
+        lista.innerHTML = "";
+        let total = 0;
+  
+        productos.forEach(p => {
+          const li = document.createElement("li");
+          li.textContent = `${p.nombre} - ${parseFloat(p.precio).toFixed(2)} €`;
+          lista.appendChild(li);
+          total += parseFloat(p.precio);
+        });
+  
+        totalElem.textContent = `Total: ${total.toFixed(2)} €`;
+      })
+      .catch(error => console.error("Error al obtener el carrito:", error));
+  }
+  </script>
+  
   
   <script>
     function mostrarSubmenuCustom(el) {
@@ -355,4 +403,74 @@
       contenedor.addEventListener("dblclick", () => contenedor.remove());
     }
   </script>
+  <script>
+    function agregarTazaAlCarrito() {
+      const texto = document.getElementById("inputTexto").value || "Tu texto aquí";
+      const precio = 9.99; // Precio de la taza personalizada
+      const nombre = "Taza personalizada: " + texto;
+  
+      const datos = {
+        nombre: nombre,
+        precio: precio
+      };
+  
+      fetch("guardar_carrito.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(datos)
+      })
+      .then(response => response.text())
+      .then(msg => {
+        alert(msg);
+        fetchCarrito();
+      })
+      .catch(err => {
+        console.error("Error al guardar la taza:", err);
+      });
+    }
+  </script>
+  <script>
+    function agregarAlCarrito() {
+      const texto = document.getElementById("inputTextoCustom").value || "Tu texto aquí";
+      const precio = 14.99; // Define un precio por defecto o cámbialo dinámicamente si lo necesitas
+      const nombre = "Camisa personalizada: " + texto;
+  
+      const datos = {
+        nombre: nombre,
+        precio: precio
+      };
+  
+      fetch("guardar_carrito.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(datos)
+      })
+      .then(response => response.text())
+      .then(msg => {
+        alert(msg);
+        fetchCarrito(); // Mensaje que viene desde PHP
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Error al guardar en el carrito.");
+      });
+    }
+  </script>
+  
+  <script>
+    function borrarCarrito() {
+  fetch("borrar_carrito.php", {
+    method: "POST"
+  })
+    .then(res => res.text())
+    .then(msg => {
+      alert(msg);
+      fetchCarrito(); // Actualiza la vista previa
+    })
+    .catch(err => {
+      console.error("Error al borrar el carrito:", err);
+    });
+}
+  </script>
+  
 </html> 

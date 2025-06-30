@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DOM Manipulation Examples</title>
+</head>
+<body>
+  <h1>Primer título</h1>
+  <h2>Primer subtitular título</h2>
+  <p>Primer párrafo</p>
+  <p>Segundo párrafo</p>
+
+  <div class="container">
+    <p class="text">Párrafo en contenedor</p>
+    <p>Párrafo fuera de contenedor</p>
+  </div>
+
+  <h2>Segundo subtitular título</h2>
+  <div id="uniqueElement">Elemento único</div>
+
+
+  
+  <div class="container">
+    <p class="text">Párrafo en contenedor</p>
+    <p>Párrafo fuera de contenedor</p>
+  </div>
+
+  <ul>
+    <li>Elemento de lista 1</li>
+    <li>Elemento de lista 2</li>
+    <li>Elemento de lista 3</li>
+  </ul>
+
+  <div class="item">Elemento 1</div>
+  <div class="item">Elemento 2</div>
+  <div class="item">Elemento 3</div>
+
+  <form>
+    <input type="text" name="username" placeholder="Nombre de usuario">
+    <input type="password" name="password" placeholder="Contraseña">
+  </form>
+
+  <img src="img1.jpg">
+  <img src="img2.jpg">
+  <img src="img3.jpg">
+<br>
+
+  <button>Enviar</button>
+  <button>Guardar</button>
+  <button>Cancelar</button>
+
+  <p class="destacado">Este es un texto importante.</p>
+<p class="destacado">Este también lo es.</p>
+<p>Este no tiene clase.</p>
+<h2 class="titulo">Título 1</h2>
+<h2 class="titulo">Título 2</h2>
+<div class="ocultar">No quiero que me veas</div>
+<div class="ocultar">Tampoco a mí</div>
+<div class="ocultar">No quiero que me veas</div>
+<div class="ocultar">Tampoco a mí</div>
+
+<p>Selecciona tu género:</p>
+<label><input type="radio" name="genero" value="Masculino"> Masculino</label>
+<label><input type="radio" name="genero" value="Femenino"> Femenino</label>
+<button onclick="mostrarGenero()">Mostrar</button>
+<p id="resultado1"></p>
+
+<p>Selecciona tus lenguajes favoritos:</p>
+<label><input type="checkbox" name="lenguajes" value="JavaScript"> JavaScript</label>
+<label><input type="checkbox" name="lenguajes" value="Python"> Python</label>
+<label><input type="checkbox" name="lenguajes" value="Java"> Java</label>
+<button onclick="contarLenguajes()">Contar</button>
+<p id="resultado2"></p>
+
+<p>Notas del alumno:</p>
+<input type="number" name="nota" value="7">
+<input type="number" name="nota" value="8">
+<input type="number" name="nota" value="6">
+<button onclick="sumarNotas()">Sumar</button>
+<p id="resultado3"></p>
+
+  <script src="getElementsByTagName.js"></script>
+  <script src="querySelector.js"></script>
+  <script src="getElementById.js"></script>
+  <script src="querySelectorAll.js"></script>
+  <script src="getElementsByClassName.js"></script>
+  <script src="getElementsByName.js"></script>
+
+
+</body>
+</html>
