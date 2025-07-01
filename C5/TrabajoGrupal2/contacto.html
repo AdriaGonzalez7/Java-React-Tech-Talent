@@ -8,7 +8,10 @@
 </head>
 <body>
   <header>
-    <nav>
+    <nav class="barra-navegacion">
+      <a href="Home.html" class="logo">
+        <img src="IMG/logo.png" alt="Logo" />
+      </a>
       <ul class="menu">
         <li><a href="Home.html">Inicio</a></li>
         <li><a href="about.html">Sobre Nosotros</a></li>
@@ -17,6 +20,7 @@
       </ul>
     </nav>
   </header>
+
   <main>
     <section class="contacto">
       <h1>Contáctanos</h1>
@@ -32,13 +36,13 @@
       
         <label for="mensaje">Mensaje:</label>
         <textarea id="mensaje" name="mensaje" required></textarea>
+
+        <!-- reCAPTCHA v2 -->
         <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
 
-        
         <button type="submit">Enviar amor (con insulto)</button>
         <p id="mensaje-resultado" class="confirmacion"></p>
       </form>
-      
     </section>
   </main>
 
@@ -46,70 +50,42 @@
     <p>&copy; 2025 Tienda de Insultos Cariñosos - Todos los derechos reservados.</p>
   </footer>
 
-  <script>
-    function showSubmenu(element) {
-      const submenu = element.querySelector('.submenu');
-      if (submenu) {
-        submenu.style.display = 'block';
-      }
-    }
-
-    function hideSubmenu(element) {
-      const submenu = element.querySelector('.submenu');
-      if (submenu) {
-        submenu.style.display = 'none';
-      }
-    }
-  </script>
-
-<script>
-  document.getElementById('formulario-contacto').addEventListener('submit', async function(e) {
-    e.preventDefault();
-  
-    const nombre = document.getElementById('nombre').value;
-    const email = document.getElementById('email').value;
-    const mensaje = document.getElementById('mensaje').value;
-  
-    const formData = new FormData();
-    formData.append('nombre', nombre);
-    formData.append('email', email);
-    formData.append('mensaje', mensaje);
-  
-    const resultado = document.getElementById('mensaje-resultado');
-    resultado.textContent = "Enviando...";
-  
-    try {
-      const response = await fetch('procesar_formulario.php', {
-        method: 'POST',
-        body: formData
-      });
-  
-      const texto = await response.text();
-      resultado.textContent = texto;
-      resultado.style.color = 'green';
-      document.getElementById('formulario-contacto').reset();
-    } catch (error) {
-      resultado.textContent = "Ups... ocurrió un error.";
-      resultado.style.color = 'red';
-    }
-  });
-  </script>
-  
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <script>
-    const formulario = document.getElementById('formulario-contacto');
-  
-    formulario.addEventListener('submit', function (e) {
+    document.getElementById('formulario-contacto').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
       const respuesta = grecaptcha.getResponse();
-  
       if (!respuesta) {
-        e.preventDefault(); // Detiene el envío
-        alert('¡Por favor, confirma que no eres un robot! 🤖🚫');
+        alert('¡Por favor, marca que no eres un robot! 🤖');
+        return;
       }
-      // Si hay respuesta, se envía normalmente
+
+      const formData = new FormData();
+      formData.append('nombre', document.getElementById('nombre').value);
+      formData.append('email', document.getElementById('email').value);
+      formData.append('mensaje', document.getElementById('mensaje').value);
+      formData.append('g-recaptcha-response', respuesta);
+
+      const resultado = document.getElementById('mensaje-resultado');
+      resultado.textContent = "Enviando...";
+
+      try {
+        const response = await fetch('procesar_formulario.php', {
+          method: 'POST',
+          body: formData
+        });
+
+        const texto = await response.text();
+        resultado.textContent = texto;
+        resultado.style.color = 'green';
+        document.getElementById('formulario-contacto').reset();
+        grecaptcha.reset(); // reset para nuevos mensajes
+      } catch (error) {
+        resultado.textContent = "Ups... ocurrió un error inesperado.";
+        resultado.style.color = 'red';
+      }
     });
   </script>
-  
-
 </body>
 </html>

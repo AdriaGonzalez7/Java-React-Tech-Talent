@@ -19,9 +19,17 @@
     background-color: #9cd2f1;
     height: 70px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start; /* Alinea todo hacia la izquierda */
     align-items: center;
+    padding: 0 30px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    gap: 450px; /* espacio entre el logo y el menú */
+  }
+
+  .logo img {
+    height: 50px;
+    width: auto;
+    display: block;
   }
   
   nav ul.menu {
@@ -109,7 +117,8 @@
     justify-content: center;
     gap: 30px;
     padding: 40px 20px;
-  }.equipo img {
+  }
+  .equipo img {
     width: 200px;
     height: 200px;
     border-radius: 50%;
@@ -279,11 +288,20 @@
   margin-bottom: 0.5em;
 }
 
-.mapa iframe {
-  border-radius: 8px;
+.mapa {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.mapa > div {
   max-width: 800px;
   width: 100%;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
 }
+
 
 /* ========== BOTONES ========== */
 
